@@ -24,6 +24,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/product', [ImagesController::class, 'index']);
+Route::get('/product/{query}', [ImagesController::class, 'search']);
 
 Route::get('/blog', [Aranoz2::class, 'blog']);
 

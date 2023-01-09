@@ -17,9 +17,6 @@ class CouleurSeeder extends Seeder
     {
         DB::table('couleurs')->insert([
             [
-                "name" => "jaune"
-            ],
-            [
                 "name" => "vert"
             ],
             [

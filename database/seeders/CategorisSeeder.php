@@ -17,22 +17,10 @@ class CategorisSeeder extends Seeder
     {
         DB::table('categoris')->insert([
             [
-                "name" => "table"
-            ],
-            [
                 "name" => "chaise"
             ],
             [
-                "name" => "fauteuil"
-            ],
-            [
-                "name" => "canapé"
-            ],
-            [
                 "name" => "chaussure"
-            ],
-            [
-                "name" => "tee-shirt"
             ],
             [
                 "name" => "accésoire"

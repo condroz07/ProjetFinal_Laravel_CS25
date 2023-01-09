@@ -31,9 +31,13 @@
                             </div>
                             <div class="widgets_inner">
                                 <ul class="list">
+                                    <li>
+                                        <a href="/product">All Products</a>
+                                    </li>
                                     @foreach ($categoris as $item)
                                         <li>
-                                            <a href="#">{{ $item->name }}</a>
+                                            <a
+                                                href={{ $request->fullUrlWithQuery(['categoris' => $item->id]) }}>{{ $item->name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -46,9 +50,13 @@
                             </div>
                             <div class="widgets_inner">
                                 <ul class="list">
+                                    <li>
+                                        <a href="/product">All Products</a>
+                                    </li>
                                     @foreach ($color as $item)
                                         <li>
-                                            <a href="#">{{ $item->name }}</a>
+                                            <a
+                                                href={{ $request->fullUrlWithQuery(['couleur' => $item->id]) }}>{{ $item->name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -61,21 +69,23 @@
                         <div class="col-lg-12">
                             <div class="product_top_bar d-flex justify-content-between align-items-center">
                                 <div class="single_product_menu d-flex">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="search"
+                                    <form action="/product" method="GET" class="input-group">
+                                        @csrf
+                                        <input type="text" class="form-control" name="query" placeholder="search"
                                             aria-describedby="inputGroupPrepend">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="ti-search"></i></span>
+                                            <button type="submit" class="input-group-text" id="inputGroupPrepend"><i
+                                                    class="ti-search"></i></button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row align-items-center latest_product_inner">
-                        @foreach ($produit as $item)
+
+                        @foreach ($products as $item)
                             <div class="col-lg-4 col-sm-6">
                                 <div class="single_product_item">
                                     <img src="storage/{{ $item->src }}" alt="">
@@ -87,11 +97,12 @@
                                 </div>
                             </div>
                         @endforeach
+
                         <div class="col-lg-12">
                             <div class="pageination">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
-                                        {{ $produit->links('pagination::perso ') }}
+                                        {{ $products->links('pagination::perso ') }}
                                     </ul>
                                 </nav>
                             </div>
