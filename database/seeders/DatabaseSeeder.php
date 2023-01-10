@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Roles;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorisSeeder::class,
             CouleurSeeder::class,
-            ImagesSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

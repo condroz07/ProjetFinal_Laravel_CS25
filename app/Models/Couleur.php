@@ -10,6 +10,6 @@ class Couleur extends Model
     use HasFactory;
 
     public function images() {
-        return $this->hasMany(Images::class);
+        return $this->hasMany(Product::class);
     }
 }

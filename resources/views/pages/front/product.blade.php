@@ -69,13 +69,12 @@
                         <div class="col-lg-12">
                             <div class="product_top_bar d-flex justify-content-between align-items-center">
                                 <div class="single_product_menu d-flex">
-                                    <form action="/product" method="GET" class="input-group">
-                                        @csrf
-                                        <input type="text" class="form-control" name="query" placeholder="search"
-                                            aria-describedby="inputGroupPrepend">
+                                    <form class="input-group" action="/product/search" method="GET">
+                                        <input type="text" class="form-control" name="search" placeholder="search"
+                                            aria-describedby="inputGroupPrepend" >
                                         <div class="input-group-prepend">
-                                            <button type="submit" class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="ti-search"></i></button>
+                                            <span type="submit" class="input-group-text" id="inputGroupPrepend"><i
+                                                    class="ti-search"></i></span>
                                         </div>
                                     </form>
                                 </div>
@@ -88,11 +87,12 @@
                         @foreach ($products as $item)
                             <div class="col-lg-4 col-sm-6">
                                 <div class="single_product_item">
-                                    <img src="storage/{{ $item->src }}" alt="">
+                                    <img src="{{ asset('storage/' . $item->src) }}" alt="" style="height: 35svh">
                                     <div class="single_product_text">
                                         <h4>{{ $item->name }}</h4>
                                         <h3>{{ $item->prix }}€</h3>
                                         <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                        <a href="/showProduct/{{ $item->id }}">More Détails</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,11 @@
                             <div class="pageination">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
-                                        {{ $products->links('pagination::perso ') }}
+                                        @if (request()->routeIs('product-index'))
+                                            {{ $products->links('pagination::perso ') }}
+                                        @else
+                                            
+                                        @endif
                                     </ul>
                                 </nav>
                             </div>

@@ -1,7 +1,9 @@
+
 <?php
 
 use App\Http\Controllers\Aranoz2;
-use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\PanierController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,14 +25,28 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/product', [ImagesController::class, 'index']);
-Route::get('/product/{query}', [ImagesController::class, 'search']);
+
+//product 
+
+Route::get('/product', [ProductController::class,'index'])->name('product-index');
+Route::get('/product/search', [ProductController::class,'search']);
+
+Route::get('/showProduct/{id}', [ProductController::class , 'show']);
+
+// Blog
 
 Route::get('/blog', [Aranoz2::class, 'blog']);
 
+// Contact
+
 Route::get('/contact', [Aranoz2::class, 'contact']);
 
-Route::get('/panier', [Aranoz2::class, 'panier']);
+// Panier 
+
+Route::get('/panier', [PanierController::class, 'index'])->name('panier')->middleware('isGuest');
+Route::post('/panier/ajouter', [PanierController::class, 'addProduct'])->name('panier.ajouter')->middleware('isGuest');
+
+Route::delete('/panier/{id}', [PanierController::class, 'destroy'])->name('panier.vider');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

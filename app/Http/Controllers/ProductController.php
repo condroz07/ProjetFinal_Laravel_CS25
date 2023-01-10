@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoris;
 use App\Models\Couleur;
-use App\Models\Images;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class ImagesController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,36 +19,42 @@ class ImagesController extends Controller
         // Récupérez tous les paramètres de filtre de la requête
         $category = $request->input('categoris');
         $color = $request->input('couleur');
+        $search = $request->input('query');
 
         // Construisez une requête de base de données qui sélectionne les produits qui correspondent aux critères de filtre
-        $query = Images::query();
+        $query = Product::query();
         if ($category) {
             $query->where('categoris_id', $category);
         }
         if ($color) {
             $query->where('couleur_id', $color);
         }
-
+        if(request('search')){
+            $search = Product::where('name', 'like', '%' . request('search') . '%')->get();
+        }else {
+            $search = Product::all();
+        }
         $products = $query->paginate(9);
 
-        // $produit = Images::paginate(9);
+        // $produit = Product::paginate(9);
         $categoris = Categoris::all();
         $color = Couleur::all();
-        $bestseller = Images::orderBy('id', 'desc')->take(5)->get();
+        $bestseller = Product::orderBy('id', 'desc')->take(5)->get();
         return view('pages.front.product', compact( 'categoris', 'color', 'bestseller', 'products', 'request'));
     }
 
     public function search(Request $request)
     {
-        // Récupérez la requête de recherche de l'utilisateur
-        $query = $request->input('query');
+        if($request->search){
+            $products = Product::where('name', 'LIKE', "%$request->search%")->get();
+        }else {
+            $products = Product::all();
+        }
 
-        // Effectuez la recherche des produits qui correspondent à la requête de l'utilisateur
-        $products = Images::where('name',"%$query%")
-            ->paginate(9);
-
-        // Renvoyez les résultats de la recherche à la vue
-        return view('pages.front.product', compact('products'));
+        $categoris = Categoris::all();
+        $color = Couleur::all();
+        $bestseller = Product::orderBy('id', 'desc')->take(5)->get();
+        return view('pages.front.product', compact('categoris', 'color', 'bestseller','products', 'request'));
     }
 
     /**
@@ -76,21 +81,23 @@ class ImagesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Images  $images
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Images $images)
+    public function show(Product $product, $id)
     {
-        //
+        $products = Product::find($id);
+        $bestseller = Product::orderBy('id', 'desc')->take(5)->get();
+        return view('pages.front.showProduct', compact('products', 'bestseller'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Images  $images
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Images $images)
+    public function edit(Product $product)
     {
         //
     }
@@ -99,10 +106,10 @@ class ImagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Images  $images
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Images $images)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -110,10 +117,10 @@ class ImagesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Images  $images
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Images $images)
+    public function destroy(Product $product)
     {
         //
     }

@@ -27,105 +27,65 @@
                         <thead>
                             <tr>
                                 <th scope="col">Product</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Total</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($panier as $item)
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="{{ asset('storage/' . $item->products->src) }}"alt=""
+                                                    style="height: 20vh" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="/showProduct/{{ $item->products->id }}" class="text-dark">{{ $item->products->name }}</a>
+                                    </td>
+                                    <td>
+                                        <h5>{{ $item->products->prix }}&nbsp;€</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <input type="number" value={{ $item->quantite }}
+                                                min="0" max="10">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>{{ $item->products->prix * $item->quantite }}&nbsp;€</h5>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('panier.vider', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                             <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/single-product/cart-1.jpg" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-                                        <input class="input-number" type="text" value="1" min="0"
-                                            max="10">
-                                        <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/single-product/cart-1.jpg" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-                                        <input class="input-number" type="text" value="1" min="0"
-                                            max="10">
-                                        <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/single-product/cart-1.jpg" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-                                        <input class="input-number" type="text" value="1" min="0"
-                                            max="10">
-                                        <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <h5>Subtotal</h5>
                                 </td>
                                 <td>
-                                    <h5>$2160.00</h5>
+                                    <h5>{{ $total }}€</h5>
                                 </td>
                             </tr>
 
                         </tbody>
                     </table>
                     <div class="checkout_btn_inner float-right">
-                        <a class="btn_1" href="#">Continue Shopping</a>
+                        <a class="btn_1" href="/product">Continue Shopping</a>
                         <a class="btn_1 checkout_btn_1" href="/checkout.html">Proceed to checkout</a>
                     </div>
                 </div>

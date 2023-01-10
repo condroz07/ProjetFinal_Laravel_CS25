@@ -42,7 +42,6 @@
                         </ul>
                     </div>
                     @if (Auth::user() == true)
-                        
                     @else
                         <div class="hearer_icon d-flex">
                             <a href="{{ route('login') }}"><i class="ti-user"></i></a>
@@ -62,12 +61,23 @@
                     @else
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    {{-- <img src="storage/{{ Auth::user()->avatar }}" alt=""> --}}
+                                    <a class="nav-link dropdown-toggle" href="/blog" id="navbarDropdown_2"
+                                        role="button" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        {{ Auth::user()->name }}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                        <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </div>
+                                </li>
+                            </ul>
                         </form>
                     @endif
                 </nav>

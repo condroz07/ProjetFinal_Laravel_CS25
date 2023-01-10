@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoris extends Model
+class Panier extends Model
 {
     use HasFactory;
 
+    public function products() {
+        return $this->belongsTo(Product::class);
+    }
     public function user() {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(User::class);
     }
 }
