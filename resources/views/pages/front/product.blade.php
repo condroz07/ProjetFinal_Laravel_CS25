@@ -18,6 +18,7 @@
     </section>
     <!-- breadcrumb start-->
 
+    @include('partials.flash')
     <!--================Category Product Area =================-->
     <section class="cat_product_area section_padding">
         <div class="container">
@@ -70,8 +71,9 @@
                             <div class="product_top_bar d-flex justify-content-between align-items-center">
                                 <div class="single_product_menu d-flex">
                                     <form class="input-group" action="/product/search" method="GET">
+                                        @csrf
                                         <input type="text" class="form-control" name="search" placeholder="search"
-                                            aria-describedby="inputGroupPrepend" >
+                                            aria-describedby="inputGroupPrepend">
                                         <div class="input-group-prepend">
                                             <span type="submit" class="input-group-text" id="inputGroupPrepend"><i
                                                     class="ti-search"></i></span>
@@ -85,13 +87,26 @@
                     <div class="row align-items-center latest_product_inner">
 
                         @foreach ($products as $item)
-                            <div class="col-lg-4 col-sm-6">
+                            <div  class="col-lg-4 col-sm-6" >
                                 <div class="single_product_item">
                                     <img src="{{ asset('storage/' . $item->src) }}" alt="" style="height: 35svh">
                                     <div class="single_product_text">
-                                        <h4>{{ $item->name }}</h4>
-                                        <h3>{{ $item->prix }}€</h3>
-                                        <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                        <form action="{{ route('panier.ajouter') }}" method="POST">
+                                            @csrf
+                                            <input type="text" class="d-none" name="products_id" value="{{ $item->id }}">
+                                            <h4>{{ $item->name }}</h4>
+                                            <h3>{{ $item->prix }}€</h3>
+                                            @auth
+                                                <a href="" class="add_cart"><button type="submit" class="btn">+ add to cart</button></a>
+                                            @endauth
+                                        </form>
+                                        @auth
+                                            <form action="{{ route('add.favoris') }}" method="POST">
+                                                @csrf
+                                                <input type="text" class="d-none" name="products_id" value="{{ $item->id }}">
+                                                <a><button class="btn" type="submit"><i class="ti-heart"></i></button></a>
+                                            </form>
+                                        @endauth
                                         <a href="/showProduct/{{ $item->id }}">More Détails</a>
                                     </div>
                                 </div>
@@ -105,7 +120,6 @@
                                         @if (request()->routeIs('product-index'))
                                             {{ $products->links('pagination::perso ') }}
                                         @else
-                                            
                                         @endif
                                     </ul>
                                 </nav>
@@ -133,7 +147,7 @@
                     <div class="best_product_slider owl-carousel">
                         @foreach ($bestseller as $item)
                             <div class="single_product_item">
-                                <img src="storage/{{ $item->src }}" alt="">
+                                <img src="storage/{{ $item->src }}" alt="" style="height: 30vh">
                                 <div class="single_product_text">
                                     <h4>{{ $item->name }}</h4>
                                     <h3>{{ $item->prix }}€</h3>

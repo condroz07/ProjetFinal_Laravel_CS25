@@ -49,16 +49,6 @@
                     @endif
                     @if (Auth::user() == null)
                     @else
-                        <div class="hearer_icon d-flex">
-                            <div class="dropdown cart">
-                                <a href="/panier">
-                                    <i class="fas fa-cart-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-                    @if (Auth::user() == null)
-                    @else
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <ul class="navbar-nav">
@@ -80,6 +70,17 @@
                             </ul>
                         </form>
                     @endif
+                    @if (Auth::user() == null)
+                    @else
+                        <div class="hearer_icon d-flex">
+                            <div class="dropdown cart">
+                                <a href="/panier">
+                                    <i class="fas fa-cart-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                    
                 </nav>
             </div>
         </div>

@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class PanierController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $produits = Product::all();
         $panier = Auth::user()->panier;
         $total = $panier->sum(function ($item) {
             return $item->products->prix * $item->quantite;
         });
-        return view('pages.front.panier', compact('panier', 'total'));
+
+        return view('pages.front.panier', compact('panier', 'total','produits'));
     }
 
     public function addProduct(Request $request, Product $product)
@@ -27,20 +29,20 @@ class PanierController extends Controller
 
         $item = $user->panier->where('products_id', $product->id)->first();
 
-        if($item) {
-            $item->quantite += $request->quantite;
+        if ($item) {
+            $item->quantite += $request->quantite || 1;
             $item->save();
-        }else {
+        } else {
             $products = Product::find($request->products_id);
             $panier = new Panier;
             $panier->products_id = $request->products_id;
-            $panier->quantite = $request->quantite;
+            $panier->quantite = $request->quantite || 1;
             $panier->user_id = Auth::user()->id;
             $panier->save();
         }
         return back()->with('success', 'Le produit a été ajouté à votre panier !');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -97,9 +99,26 @@ class PanierController extends Controller
      * @param  \App\Models\Panier  $panier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Panier $panier)
+    public function changerQuantite(Request $request, Panier $panier)
     {
-        //
+        $user = Auth::user();
+
+        $product = Product::find($request->products_id);
+
+        $item = $user->panier->where('products_id', $product->id)->first();
+
+        if ($item) {
+            $item->quantite = $request->quantite;
+            $item->save();
+        }
+
+        return redirect()->route('panier')->with('success', 'Quantité de produit mise à jour!');
+    }
+
+    public function test(Request $request, Panier $panier, Product $product){
+
+
+        
     }
 
     /**
@@ -114,4 +133,5 @@ class PanierController extends Controller
         $item->delete();
         return redirect()->back()->with('success', 'Votre produit a été supprimer !');
     }
+    
 }

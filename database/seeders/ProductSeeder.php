@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 2,
                 "couleur_id" => 4,
                 "prix" => 35,
-                "quantite" =>15 
+                "quantite" => 4
             ],
             [
                 "name" => "Sac Rose",
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 3,
                 "couleur_id" => 2,
                 "prix" => 50,
-                "quantite" =>15 
+                "quantite" => 3 
             ],
             [
                 "name" => "Montre Digital",
@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 3,
                 "couleur_id" => 7,
                 "prix" => 75,
-                "quantite" =>15 
+                "quantite" => 8 
             ],
             [
                 "name" => "Jeans Blue",
@@ -46,7 +46,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 4,
                 "couleur_id" => 3,
                 "prix" => 35,
-                "quantite" =>15 
+                "quantite" => 5 
             ],
             [
                 "name" => "Montre",
@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 3,
                 "couleur_id" => 7,
                 "prix" => 50,
-                "quantite" =>15 
+                "quantite" =>2 
             ],
             [
                 "name" => "Chaussure blanche",
@@ -62,7 +62,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 2,
                 "couleur_id" => 4,
                 "prix" => 35,
-                "quantite" =>15 
+                "quantite" => 9 
             ],
             [
                 "name" => "Sac Rouge",
@@ -70,7 +70,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 3,
                 "couleur_id" => 8,
                 "prix" => 65,
-                "quantite" =>15 
+                "quantite" => 12 
             ],
             [
                 "name" => "Chaussure de sport",
@@ -78,7 +78,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 2,
                 "couleur_id" => 5,
                 "prix" => 85,
-                "quantite" =>15 
+                "quantite" => 3
             ],
             [
                 "name" => "Chaise Vert",
@@ -86,7 +86,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 1,
                 "couleur_id" => 1,
                 "prix" => 150,
-                "quantite" => 15
+                "quantite" => 6
             ],
             [
                 "name" => "Chaise Rouge",
@@ -94,7 +94,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 1,
                 "couleur_id" => 8,
                 "prix" => 140,
-                "quantite" => 15
+                "quantite" => 5
             ],
             [
                 "name" => "Chaise Orange",
@@ -110,7 +110,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 1,
                 "couleur_id" => 5,
                 "prix" => 200,
-                "quantite" => 15
+                "quantite" => 7
             ],
             [
                 "name" => "Chaise Blanche",
@@ -118,7 +118,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 1,
                 "couleur_id" => 4,
                 "prix" => 125,
-                "quantite" => 15
+                "quantite" => 1
             ],
             [
                 "name" => "Chaise Blanche",
@@ -126,7 +126,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 1,
                 "couleur_id" => 4,
                 "prix" => 120,
-                "quantite" => 15
+                "quantite" => 4
             ],
             [
                 "name" => "Chaise Rouge",
@@ -134,7 +134,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 1,
                 "couleur_id" => 8,
                 "prix" => 145,
-                "quantite" => 15
+                "quantite" => 6
             ],
             [
                 "name" => "Jeans Blue femme",
@@ -142,7 +142,7 @@ class ProductSeeder extends Seeder
                 "categoris_id" => 4,
                 "couleur_id" => 3,
                 "prix" => 65,
-                "quantite" => 15
+                "quantite" => 5
             ]
         ]);
     }

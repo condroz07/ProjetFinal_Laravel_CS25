@@ -18,6 +18,7 @@
     </section>
     <!-- breadcrumb start-->
 
+    @include('partials.flash')
     <!--================Cart Area =================-->
     <section class="cart_area padding_top">
         <div class="container">
@@ -48,13 +49,18 @@
                                     <td>
                                         <a href="/showProduct/{{ $item->products->id }}" class="text-dark">{{ $item->products->name }}</a>
                                     </td>
+                                    @include('partials.flash')
                                     <td>
                                         <h5>{{ $item->products->prix }}&nbsp;€</h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
-                                            <input type="number" value={{ $item->quantite }}
-                                                min="0" max="10">
+                                            <form action="/panier/changerQuantite/{{ $item->id }}" method="POST">
+                                                @csrf
+                                                <input class="d-none" type="text" value="{{ $item->products->id }}" name="products_id">
+                                                <input type="number" name="quantite" value="{{ $item->quantite }}" min="0" max={{ $produits->where('id',$item->products->id)->first()->quantite}}>
+                                                <button class="d-none" type="submit">save</button>
+                                            </form>
                                         </div>
                                     </td>
                                     <td>

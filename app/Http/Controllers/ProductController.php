@@ -16,12 +16,10 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // Récupérez tous les paramètres de filtre de la requête
         $category = $request->input('categoris');
         $color = $request->input('couleur');
         $search = $request->input('query');
 
-        // Construisez une requête de base de données qui sélectionne les produits qui correspondent aux critères de filtre
         $query = Product::query();
         if ($category) {
             $query->where('categoris_id', $category);
@@ -36,10 +34,9 @@ class ProductController extends Controller
         }
         $products = $query->paginate(9);
 
-        // $produit = Product::paginate(9);
         $categoris = Categoris::all();
         $color = Couleur::all();
-        $bestseller = Product::orderBy('id', 'desc')->take(5)->get();
+        $bestseller = Product::all()->where('quantite', '<=', '5');
         return view('pages.front.product', compact( 'categoris', 'color', 'bestseller', 'products', 'request'));
     }
 
@@ -53,7 +50,7 @@ class ProductController extends Controller
 
         $categoris = Categoris::all();
         $color = Couleur::all();
-        $bestseller = Product::orderBy('id', 'desc')->take(5)->get();
+        $bestseller = Product::all()->where('quantite', '<=', '5');
         return view('pages.front.product', compact('categoris', 'color', 'bestseller','products', 'request'));
     }
 
@@ -87,7 +84,7 @@ class ProductController extends Controller
     public function show(Product $product, $id)
     {
         $products = Product::find($id);
-        $bestseller = Product::orderBy('id', 'desc')->take(5)->get();
+        $bestseller = Product::all()->where('quantite', '<=', '5');
         return view('pages.front.showProduct', compact('products', 'bestseller'));
     }
 

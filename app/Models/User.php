@@ -50,4 +50,7 @@ class User extends Authenticatable
     public function panier() {
         return $this->hasMany(Panier::class);
     }
+    public function favoris() {
+        return $this->hasMany(Favoris::class);
+    }
 }

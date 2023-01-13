@@ -32,7 +32,7 @@
         </div>
     </section>
     <!-- banner part start-->
-
+    @include('partials.flash')
     <!-- feature_part start-->
     <section class="feature_part padding_top">
         <div class="container">
@@ -49,7 +49,8 @@
                         <div class="single_feature_post_text">
                             <p>{{ $item->name }}</p>
                             <h3>Latest from {{ $item->categoris->name }}</h3>
-                            <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                            <a href="/showProduct/{{ $item->id }}" class="feature_btn">EXPLORE NOW <i
+                                    class="fas fa-play"></i></a>
                             <img src="storage/{{ $item->src }}" alt="" style="height: 30vh">
                         </div>
                     </div>
@@ -79,25 +80,41 @@
                                     @for ($e = 0; $e < 8 && $count < $awesome->count(); $e++)
                                         <div class="col-lg-3 col-sm-6">
                                             <div class="single_product_item">
-                                                <img src="storage/{{ $awesome[$count]->src }}" alt=""
-                                                    style="height: 30vh">
-                                                <div class="single_product_text">
-                                                    <h4>{{ $awesome[$count]->name }}</h4>
-                                                    <h3>{{ $awesome[$count]->prix }}€</h3>
-                                                    <a href="#" class="add_cart">+ add to cart<i
-                                                            class="ti-heart"></i></a>
-                                                </div>
+                                                <form action="{{ route('panier.ajouter') }}" method="POST">
+                                                    @csrf
+                                                    <input type="text" class="d-none" name="products_id"
+                                                        value="{{ $awesome[$count]->id }}">
+                                                    <img src="storage/{{ $awesome[$count]->src }}" alt=""
+                                                        style="height: 30vh">
+                                                    <div class="single_product_text">
+                                                        <h4>{{ $awesome[$count]->name }}</h4>
+                                                        <h3>{{ $awesome[$count]->prix }}€</h3>
+                                                        @auth
+                                                            <a href="#" class="add_cart"><button type="submit"
+                                                                    class="btn">+ add to cart</button></a>
+                                                        @endauth
+                                                </form>
+                                                @auth
+                                                    <form action="{{ route('add.favoris') }}" method="POST">
+                                                        @csrf
+                                                        <input type="text" class="d-none" name="products_id"
+                                                            value="{{ $item->id }}">
+                                                        <a><button class="btn" type="submit"><i
+                                                                    class="ti-heart"></i></button></a>
+                                                    </form>
+                                                @endauth
                                             </div>
                                         </div>
-                                        <?php $count++; ?>
-                                    @endfor
-                                    <?php $e = 0; ?>
                                 </div>
-                            </div>
+                                <?php $count++; ?>
                         @endfor
+                        <?php $e = 0; ?>
                     </div>
                 </div>
+                @endfor
             </div>
+        </div>
+        </div>
         </div>
     </section>
     <!-- product_list part start-->
@@ -106,34 +123,35 @@
     <section class="our_offer section_padding">
         <div class="container">
             <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-md-6">
-                    @foreach ($solde as $item)
+                @foreach ($solde as $item)
+                    <div class="col-lg-6 col-md-6">
                         <div class="offer_img">
                             <img src="storage/{{ $item->src }}" alt="" style="height: 45vh">
                         </div>
-                    @endforeach
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="offer_text">
-                        <h2>Weekly Sale on
-                            60% Off All Products</h2>
-                        <div class="date_countdown">
-                            <div id="timer">
-                                <div id="days" class="date"></div>
-                                <div id="hours" class="date"></div>
-                                <div id="minutes" class="date"></div>
-                                <div id="seconds" class="date"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="offer_text">
+                            <h2>Weekly Sale on
+                                60% Off All Products</h2>
+                            <div class="date_countdown">
+                                <div id="timer">
+                                    <div id="days" class="date"></div>
+                                    <div id="hours" class="date"></div>
+                                    <div id="minutes" class="date"></div>
+                                    <div id="seconds" class="date"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="enter email address"
-                                aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <a href="#" class="input-group-text btn_2" id="basic-addon2">book now</a>
-                            </div>
+                            <form action="{{ route('solde') }}" method="POST" class="input-group">
+                                @csrf
+                                <input type="text" class="d-none" name="products_id" value="{{ $item->id }}">
+                                <input type="text"  placeholder="enter email address"name="email">
+                                <div class="input-group-append">
+                                    <button type="submit" class="input-group-text btn_2">book now</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -154,7 +172,7 @@
                     <div class="best_product_slider owl-carousel">
                         @foreach ($bestseller as $item)
                             <div class="single_product_item">
-                                <img src="storage/{{ $item->src }}" alt="">
+                                <img src="storage/{{ $item->src }}" alt="" style="height: 30vh">
                                 <div class="single_product_text">
                                     <h4>{{ $item->name }}</h4>
                                     <h3>{{ $item->prix }}€</h3>
@@ -173,18 +191,20 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-7">
-                    <div class="subscribe_area_text text-center">
+                    <form action="{{ route('sub') }}" method="POST" class="subscribe_area_text text-center">
+                        @csrf
                         <h5>Join Our Newsletter</h5>
                         <h2>Subscribe to get Updated
                             with new offers</h2>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="enter email address"
-                                aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                aria-label="Recipient's username" aria-describedby="basic-addon2" name="email">
                             <div class="input-group-append">
-                                <a href="#" class="input-group-text btn_2" id="basic-addon2">subscribe now</a>
+                                <button type="submit" class="input-group-text btn_2" id="basic-addon2">subscribe
+                                    now</button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

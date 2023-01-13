@@ -18,4 +18,10 @@ class Product extends Model
     public function panier() {
         return $this->hasMany(Panier::class);
     }
+    public function favoris() {
+        return $this->hasMany(Favoris::class);
+    }
+    public function soldes() {
+        return $this->hasMany(Soldes::class);
+    }
 }

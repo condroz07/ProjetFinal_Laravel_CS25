@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paniers', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('favoris', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('products_id')->constrained()->onDelete('cascade');
-            $table->integer('quantite');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paniers');
+        Schema::dropIfExists('favoris');
     }
 };

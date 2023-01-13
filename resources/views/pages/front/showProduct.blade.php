@@ -51,16 +51,18 @@
                             First replenish living. Creepeth image image. Creeping can't, won't called.
                             Two fruitful let days signs sea together all land fly subdue
                         </p>
-                        <div class="card_area d-flex justify-content-between align-items-center">
-                            <div class="product_count">
-                                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
-                                <input class="input-number" name="quantite" type="text" value="1" min="0"
-                                    max="{{ $products->quantite }}">
-                                <span class="number-increment"> <i class="ti-plus"></i></span>
+                        @auth
+                            <div class="card_area d-flex justify-content-between align-items-center">
+                                <div class="product_count">
+                                    <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                                    <input class="input-number" name="quantite" type="text" value="1" min="1"
+                                        max="{{ $products->where('id',$products->id)->first()->quantite}}">
+                                    <span class="number-increment"> <i class="ti-plus"></i></span>
+                                </div>
+                                <button type="submit" class="btn_3">add to cart</button>
+                                <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
                             </div>
-                            <button type="submit" class="btn_3">add to cart</button>
-                            <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
-                        </div>
+                        @endauth
                     </form>
                 </div>
             </div>
@@ -485,6 +487,7 @@
     </section>
     <!--================End Product Description Area =================-->
 
+    @include('partials.flash')
     <!-- product_list part start-->
     <section class="product_list best_seller">
         <div class="container">
@@ -500,7 +503,7 @@
                     <div class="best_product_slider owl-carousel">
                         @foreach ($bestseller as $item)
                             <div class="single_product_item">
-                                <img src="{{ asset('storage/' . $item->src) }}" alt="">
+                                <img src="{{ asset('storage/' . $item->src) }}" alt="" style="height: 30vh">
                                 <div class="single_product_text">
                                     <h4>{{ $item->name }}</h4>
                                     <h3>{{ $item->prix }}€</h3>
