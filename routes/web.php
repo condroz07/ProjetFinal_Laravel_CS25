@@ -3,7 +3,10 @@
 
 use App\Http\Controllers\Aranoz2;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CblogController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CproductController;
 use App\Http\Controllers\FavorisController;
 use App\Http\Controllers\newsletter;
 use App\Http\Controllers\NewsletterController;
@@ -43,6 +46,16 @@ Route::post('/newsletter', [NewsletterController::class, 'sub'])->name('sub');
 //Solde
 
 Route::post('/solde', [SoldesController::class, 'sub'])->name('solde');
+
+// Comment
+
+// product
+Route::post('/showProduct/comment', [CproductController::class, 'store'])->name('comment.product');
+
+// blog
+
+Route::post('/showBlog/comment', [CblogController::class, 'store'])->name('comment.blog');
+
 //product 
 
 Route::get('/product', [ProductController::class,'index'])->name('product-index');
@@ -76,6 +89,14 @@ Route::delete('/panier/{id}', [PanierController::class, 'destroy'])->name('panie
 //panier Changer la quantiter
 
 Route::post('panier/changerQuantite/{id}',[PanierController::class, 'changerQuantite'])->name('panier.changerQuantite')->middleware('isGuest');
+
+// Checkout
+
+Route::get('/checkout', [CheckoutController::class, 'index']);
+
+// code
+
+Route::post('/checkout/code', [CheckoutController::class, 'applyDiscount']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -42,7 +42,7 @@ class PanierController extends Controller
         }
         return back()->with('success', 'Le produit a été ajouté à votre panier !');
     }
-
+    
     /**
      * Display a listing of the resource.
      *

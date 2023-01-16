@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\categriblog;
+use App\Models\Cblog;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class BlogController extends Controller
 {
@@ -31,7 +31,7 @@ class BlogController extends Controller
         return view('pages.front.blog', compact('blog', 'blogcateg', 'request', 'recent'));
     }
 
-    public function search(Request $request)
+    public function search(Request $request, $id)
     {
         if($request->search){
             $blog = Blog::where('name', 'LIKE', "%$request->search%")->get();
@@ -40,8 +40,8 @@ class BlogController extends Controller
         }
 
         $blogcateg = categriblog::all();
-
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
+        $comment = Cblog::find($id)->count();
         return view('pages.front.blog', compact('blog', 'request', 'blogcateg', 'recent'));
     }
 
@@ -76,7 +76,8 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
-        return view('pages.front.showBlog', compact('blog', 'recent'));
+        $comment = Cblog::paginate(2);
+        return view('pages.front.showBlog', compact('blog', 'recent', 'comment'));
     }
 
 

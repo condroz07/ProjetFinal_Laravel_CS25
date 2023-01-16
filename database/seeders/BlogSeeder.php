@@ -19,30 +19,85 @@ class BlogSeeder extends Seeder
             [
                 "name" => 'Soirée spécial',
                 "src" => 'single_blog_1.png',
+                "text" => 'MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower
+                MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower to actually sit through a
+                self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 1,
                 "created_at" => "2023-01-12 15:12:05"
             ],
             [
                 "name" => 'Blog photo',
                 "src" => 'single_blog_2.png',
+                "text" => 'MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower
+                MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower to actually sit through a
+                self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 2,
                 "created_at" => "2023-01-12 15:12:05"
             ],
             [
                 "name" => 'Défiller de mode',
                 "src" => 'single_blog_3.png',
+                "text" => 'MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower
+                MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower to actually sit through a
+                self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 3,
                 "created_at" => "2023-01-12 15:12:05"
             ],
             [
                 "name" => 'Life hack',
                 "src" => 'single_blog_4.png',
+                "text" => 'MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower
+                MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower to actually sit through a
+                self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 4,
                 "created_at" => "2023-01-12 15:12:05"
             ],
             [
                 "name" => 'Patisserie',
                 "src" => 'single_blog_5.png',
+                "text" => 'MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower
+                MCSE boot camps have its supporters and its detractors. Some people do not understand why
+                you
+                should have to spend money on boot camp when you can get the MCSE study materials yourself
+                at a
+                fraction of the camp price. However, who has the willpower to actually sit through a
+                self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 5,
                 "created_at" => "2023-01-12 15:12:05"
             ],

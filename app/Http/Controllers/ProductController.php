@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoris;
 use App\Models\Couleur;
+use App\Models\Cproduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -85,7 +86,8 @@ class ProductController extends Controller
     {
         $products = Product::find($id);
         $bestseller = Product::all()->where('quantite', '<=', '5');
-        return view('pages.front.showProduct', compact('products', 'bestseller'));
+        $comment = Cproduct::all();
+        return view('pages.front.showProduct', compact('products', 'bestseller', 'comment'));
     }
 
     /**

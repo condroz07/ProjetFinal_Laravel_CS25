@@ -20,7 +20,7 @@
     @include('partials.flash')
     <!--================Blog Area =================-->
     <section class="blog_area padding_top">
-        <div class="container">kylianverboomen2001@gmail.com
+        <div class="container">
             <div class="row">
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="blog_left_sidebar">
@@ -39,16 +39,14 @@
                                     <a class="d-inline-block" href="/showBlog/{{ $item->id }}">
                                         <h2>{{ $item->name }}</h2>
                                     </a>
-                                    <p>That dominion stars lights dominion divide years for fourth have don't stars is that
-                                        he earth it first without heaven in place seed it second morning saying.</p>
+                                    <p>{{ substr($item->text, 0 , 263) . '...'}}</p>
                                     <ul class="blog-info-link">
                                         <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
-                                        <li><a href="#"><i class="far fa-comments"></i> 03 Comments</a></li>
+                                        <li><a href="#"><i class="far fa-comments"></i> {{ $item->cblog->count() }} Comments</a></li>
                                     </ul>
                                 </div>
                             </article>
                         @endforeach
-
 
                         @if (request()->routeIs('blog-index'))
                             {{ $blog->links('pagination::blog ') }}

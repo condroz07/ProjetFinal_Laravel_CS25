@@ -56,7 +56,7 @@
                                 <div class="product_count">
                                     <span class="inumber-decrement"> <i class="ti-minus"></i></span>
                                     <input class="input-number" name="quantite" type="text" value="1" min="1"
-                                        max="{{ $products->where('id',$products->id)->first()->quantite}}">
+                                        max="{{ $products->where('id', $products->id)->first()->quantite }}">
                                     <span class="number-increment"> <i class="ti-plus"></i></span>
                                 </div>
                                 <button type="submit" class="btn_3">add to cart</button>
@@ -199,89 +199,52 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="comment_list">
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/single-product/review-1.png" alt="" />
+                                @foreach ($comment as $item)
+                                    @if ($item->products_id == $products->id)
+                                        <div class="review_item">
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img src="img/product/single-product/review-1.png" alt="" />
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4>{{ $item->name }}</h4>
+                                                    <h5>{{ $item->created_at->toFormattedDateString('j F Y') }}</h5>
+                                                </div>
+                                            </div>
+                                            <p>
+                                                {{ $item->comment }}
+                                            </p>
                                         </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                        ullamco laboris nisi ut aliquip ex ea commodo
-                                    </p>
-                                </div>
-                                <div class="review_item reply">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/single-product/review-2.png" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                        ullamco laboris nisi ut aliquip ex ea commodo
-                                    </p>
-                                </div>
-                                <div class="review_item">
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/single-product/review-3.png" alt="" />
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Blake Ruiz</h4>
-                                            <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                        ullamco laboris nisi ut aliquip ex ea commodo
-                                    </p>
-                                </div>
+                                    @else
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="review_box">
                                 <h4>Post a comment</h4>
-                                <form class="row contact_form" action="contact_process.php" method="post"
-                                    id="contactForm" novalidate="novalidate">
+                                <form class="row contact_form" action="{{ route('comment.product') }}" method="post">
+                                    @csrf
+                                    <input type="text" class="d-none" name="products_id" value="{{ $products->id }}">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Your Full name" />
+                                            <input type="text" class="form-control" name="name"
+                                                value="{{ Auth::user()->name }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Email Address" />
+                                            <input type="email" class="form-control" name="email"
+                                            value="{{ Auth::user()->email }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="number" name="number"
-                                                placeholder="Phone Number" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Message"></textarea>
+                                            <textarea class="form-control" name="comment" rows="1" placeholder="Message"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" value="submit" class="btn_3">
+                                        <button type="submit" class="btn_3">
                                             Submit Now
                                         </button>
                                     </div>

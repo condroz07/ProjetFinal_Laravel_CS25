@@ -24,4 +24,7 @@ class Product extends Model
     public function soldes() {
         return $this->hasMany(Soldes::class);
     }
+    public function cproduct() {
+        return $this->hasMany(Cproduct::class);
+    }
 }

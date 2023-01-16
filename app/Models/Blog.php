@@ -12,4 +12,7 @@ class Blog extends Model
     public function blogcateg() {
         return $this->belongsTo(BlogCateg::class);
     }
+    public function cblog() {
+        return $this->hasMany(Cblog::class);
+    }
 }

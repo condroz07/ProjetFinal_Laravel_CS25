@@ -20,7 +20,7 @@
                                         </div>
                                     </div>
                                     <div class="banner_img d-none d-lg-block">
-                                        <img src="storage/{{ $item->src }}" alt="">
+                                        <img src="storage/{{ $item->src }}" alt="" style="height: 35vh">
                                     </div>
                                 </div>
                             </div>
