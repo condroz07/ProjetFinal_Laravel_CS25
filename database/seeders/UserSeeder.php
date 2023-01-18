@@ -21,28 +21,28 @@ class UserSeeder extends Seeder
                 "name" => "Admin",
                 "email" => "admin@admin.com",
                 "role_id" => 1,
-                // "avatar" => "b1.jpg",
+                "avatar" => "author_1.png",
                 "password" => Hash::make("admin@admin.com")
             ],
             [
                 "name" => "Member",
                 "email" => "member@member.com",
                 "role_id" => 2,
-                // "avatar" => "b1.jpg",
+                "avatar" => "author_3.png",
                 "password" => Hash::make("member@member.com")
             ],
             [
                 "name" => "Lui",
                 "email" => "moi@moi.com",
                 "role_id" => 3,
-                // "avatar" => "b1.jpg",
+                "avatar" => "author_2.png",
                 "password" => Hash::make("moi@moi.com")
             ],
             [
                 "name" => "Redac",
                 "email" => "red@red.com",
                 "role_id" => 4,
-                // "avatar" => "b1.jpg",
+                "avatar" => "author_2.png",
                 "password" => Hash::make("red@red.com")
             ],
         ]);

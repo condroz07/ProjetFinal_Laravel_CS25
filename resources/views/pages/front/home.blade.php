@@ -11,16 +11,18 @@
                                 <div class="row">
                                     <div class="col-lg-5 col-md-8">
                                         <div class="banner_text">
-                                            <div class="banner_text_iner">
+                                            <form action="{{ route('panier.ajouter') }}" method="POST" class="banner_text_iner">
+                                                @csrf
+                                                <input type="text" value="{{ $item->id }}" class="d-none" name="products_id">
                                                 <h1>Wood & Cloth {{ $item->categoris->name }}</h1>
                                                 <p>Incididunt ut labore et dolore magna aliqua quis ipsum
                                                     suspendisse ultrices gravida. Risus commodo viverra</p>
-                                                <a href="#" class="btn_2">buy now</a>
-                                            </div>
+                                                <button type="submit" class="btn_2">buy now</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="banner_img d-none d-lg-block">
-                                        <img src="storage/{{ $item->src }}" alt="" style="height: 35vh">
+                                        <img src="storage/{{ $item->src }}" alt="" style="height: 35vh; width: 20vw">
                                     </div>
                                 </div>
                             </div>

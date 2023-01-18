@@ -39,6 +39,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/contact">Contact</a>
                             </li>
+
+                            @if (Auth::user()->role_id === 2)
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     @if (Auth::user() == true)
@@ -52,8 +59,11 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <ul class="navbar-nav">
-                                <li class="nav-item dropdown">
-                                    {{-- <img src="storage/{{ Auth::user()->avatar }}" alt=""> --}}
+                                <li class="nav-item dropdown d-flex align-items-center">
+                                    <div>
+                                        <img src="{{ asset('storage/user/' . Auth::user()->avatar) }}"
+                                            class="rounded-fill" alt="" style="height: 6vh">
+                                    </div>
                                     <a class="nav-link dropdown-toggle" href="/blog" id="navbarDropdown_2"
                                         role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -72,15 +82,15 @@
                     @endif
                     @if (Auth::user() == null)
                     @else
-                        <div class="hearer_icon d-flex">
-                            <div class="dropdown cart">
-                                <a href="/panier">
-                                    <i class="fas fa-cart-plus"></i>
-                                </a>
-                            </div>
-                        </div>
+                        <a href="/panier" class="position-relative">
+                            <i class="fas fa-cart-plus"></i>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger p-1 text-white">
+                                {{ Auth::user()->panier->count() }}
+                            </span>
+                        </a>
                     @endif
-                    
+
                 </nav>
             </div>
         </div>

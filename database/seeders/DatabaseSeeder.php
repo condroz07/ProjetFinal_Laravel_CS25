@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             UserSeeder::class,
             CategorisSeeder::class,
+            TagSeeder::class,
             DiscountSeeder::class,
             CouleurSeeder::class,
             ProductSeeder::class,

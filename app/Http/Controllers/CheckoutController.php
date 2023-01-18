@@ -27,19 +27,20 @@ class CheckoutController extends Controller
                 return $item->products->prix * $item->quantite;
             });
             $code = Discount::where('code', $request->input('code'))->first();
-            return view('pages.front.checkout', compact('panier', 'total', 'code'));
+            $order = rand(111111, 999999);
+            return view('pages.front.checkout', compact('panier', 'total', 'code', 'order'));
         }
     }
     public function applyDiscount(Request $request)
     {
-        $code = Discount::where('code', $request->input('discount'))->first();
+        $code = Discount::where('id', $request->input('discount'))->first();
         $panier = Auth::user()->panier;
         $total = $panier->sum(function ($item) {
             return $item->products->prix * $item->quantite;
         });
-        if ($code && $code->expiration_date > now()){
-            $cart = Panier::where('user_id', auth()->id())->get()->all();
-            $cart->discount = $code->getDiscountAmount($total);
+        if ($code == "MarouaneCoach" ){
+            $cart = Panier::where('user_id', Auth::user()->id )->all();
+            $cart->discount = 1;
             $cart->save();
             return redirect()->back()->with('success', 'Discount code applied successfully.');
         }else{

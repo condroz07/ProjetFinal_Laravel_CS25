@@ -16,4 +16,8 @@ class Aranoz2 extends Controller
         return view('pages.front.home', compact('product', 'awesome','bestseller', 'solde','random'));
     }
 
+    public function dashboard(){
+        return view('pages.back.home.dashboard');
+    }
+
 }

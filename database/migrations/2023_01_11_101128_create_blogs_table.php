@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('src');
             $table->string('text', 2000);
             $table->foreignId('categriblogs_id')->constrained();
+            $table->foreignId('tags_id')->constrained();
             $table->timestamps();
         });
     }

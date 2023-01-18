@@ -7,9 +7,11 @@ use App\Http\Controllers\CblogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CproductController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\FavorisController;
 use App\Http\Controllers\newsletter;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -30,10 +32,6 @@ use Carbon\Carbon;
 
 
 Route::get('/', [Aranoz2::class, 'home'])->name('home');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Favoris
 
@@ -97,6 +95,23 @@ Route::get('/checkout', [CheckoutController::class, 'index']);
 // code
 
 Route::post('/checkout/code', [CheckoutController::class, 'applyDiscount']);
+
+// order
+
+Route::get('/order', [OrderController::class, 'index'])->middleware('isGuest');
+
+//                      Back office
+
+// dashboard
+
+Route::get('/dashboard', [Aranoz2::class, 'dashboard'])->name('dashboard')->middleware('isDash');
+
+// Products
+
+Route::get('/allProducts', [dashboardController::class, 'products'])->middleware('isAdmin');
+// editProduct
+Route::get('/editProducts/{id}', [dashboardController::class, 'editProducts'])->middleware('isAdmin');
+Route::post('/updateProducts/{id}', [ProductController::class, 'update'])->middleware('isAdmin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

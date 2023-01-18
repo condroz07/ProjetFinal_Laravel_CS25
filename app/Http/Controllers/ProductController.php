@@ -98,7 +98,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        
     }
 
     /**
@@ -108,9 +108,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $update = Product::find($id);
+        $update->quantite = $request->quantite;
+        $update->save();
+        return redirect()->back();
     }
 
     /**

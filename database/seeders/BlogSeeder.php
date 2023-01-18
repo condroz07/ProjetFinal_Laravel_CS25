@@ -31,7 +31,8 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 1,
-                "created_at" => "2023-01-12 15:12:05"
+                "created_at" => "2023-01-12 15:12:05",
+                "tags_id" => 2
             ],
             [
                 "name" => 'Blog photo',
@@ -48,7 +49,8 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 2,
-                "created_at" => "2023-01-12 15:12:05"
+                "created_at" => "2023-01-12 15:12:05",
+                "tags_id" => 1
             ],
             [
                 "name" => 'Défiller de mode',
@@ -65,7 +67,8 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 3,
-                "created_at" => "2023-01-12 15:12:05"
+                "created_at" => "2023-01-12 15:12:05",
+                "tags_id" => 4
             ],
             [
                 "name" => 'Life hack',
@@ -82,7 +85,8 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 4,
-                "created_at" => "2023-01-12 15:12:05"
+                "created_at" => "2023-01-12 15:12:05",
+                "tags_id" => 5
             ],
             [
                 "name" => 'Patisserie',
@@ -99,7 +103,8 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "categriblogs_id" => 5,
-                "created_at" => "2023-01-12 15:12:05"
+                "created_at" => "2023-01-12 15:12:05",
+                "tags_id" => 3
             ],
             ]
         );

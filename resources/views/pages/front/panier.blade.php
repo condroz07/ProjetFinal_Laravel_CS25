@@ -18,7 +18,6 @@
     </section>
     <!-- breadcrumb start-->
 
-    @include('partials.flash')
     <!--================Cart Area =================-->
     <section class="cart_area padding_top">
         <div class="container">

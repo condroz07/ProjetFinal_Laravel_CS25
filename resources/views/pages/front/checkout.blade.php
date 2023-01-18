@@ -31,48 +31,43 @@
                 <input type="text" placeholder="Enter coupon code" name="discount" />
                 <button type="submit" class="tp_btn" >Apply Coupon</button>
             </form>
-            <div class="billing_details">
+            <form action="#" method="post" class="billing_details">
+                @csrf
                 <div class="row">
                     <div class="col-lg-8">
                         <h3>Billing Details</h3>
-                        <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                        <div class="row contact_form">
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="first" name="name" />
+                                <input type="text" class="form-control" id="first" name="firstname" />
                                 <span class="placeholder" data-placeholder="First name"></span>
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="last" name="name" />
+                                <input type="text" class="form-control" id="last" name="lastname" />
                                 <span class="placeholder" data-placeholder="Last name"></span>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="company" name="company"
-                                    placeholder="Company name" />
                             </div>
                             <div class="col-md-6 form-group p_star">
                                 <input type="text" class="form-control" id="number" name="number" />
                                 <span class="placeholder" data-placeholder="Phone number"></span>
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="email" name="compemailany" />
+                                <input type="text" class="form-control" id="email" name="email" />
                                 <span class="placeholder" data-placeholder="Email Address"></span>
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add1" name="add1" />
+                                <input type="text" class="form-control" id="add1" name="adresse" />
                                 <span class="placeholder" data-placeholder="Address line 01"></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add2" name="add2" />
-                                <span class="placeholder" data-placeholder="Address line 02"></span>
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="city" name="city" />
                                 <span class="placeholder" data-placeholder="Town/City"></span>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="zip" name="zip"
+                                <input type="text" class="form-control" id="zip" name="postale"
                                     placeholder="Postcode/ZIP" />
                             </div>
-                        </form>
+                            <input type="text" class="d-none" value="{{ Auth::user()->id }}" name="user_id">
+                            <input type="text" class="d-none" value="{{ $order }}" name="order">
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="order_box">
@@ -84,6 +79,7 @@
                                     </a>
                                 </li>
                                 @foreach ($panier as $item)
+                                    <input type="text" class="d-none" value="{{ $item->id }}" name="products_id">
                                     <li>
                                         <a href="#">{{ $item->products->name }}
                                             <span class="middle">X{{ $item->quantite }}</span>
@@ -105,7 +101,7 @@
                                 </li>
                                 <li>
                                     <a href="#">Total
-                                        <span>{{ $total * ($code / 100) }}</span>
+                                        <span>{{ $total }} €</span>
                                     </a>
                                 </li>
                             </ul>
@@ -137,11 +133,11 @@
                                 <label for="f-option4">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>
-                            <a class="btn_3" href="/confirmation.html">Check and Pay</a>
+                            <button class="btn_3" type="submit">Check and Pay</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
     <!--================End Checkout Area =================-->

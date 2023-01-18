@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Discount extends Model
 {
     use HasFactory;
-    public function getDiscountAmount($subtotal)
-    {
-        return ($subtotal * ($this->discount / 100));
+    public function panier() {
+        return $this->hasMany(Panier::class);
     }
 }

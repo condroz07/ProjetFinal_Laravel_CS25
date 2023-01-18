@@ -18,7 +18,7 @@ class DiscountSeeder extends Seeder
         DB::table('discounts')->insert([
             [
                 "code" => "MarouaneCoach",
-                "discount" => 5,
+                "discount" => 0.05,
                 "expiration_date" => "2023-01-27"
             ]
         ]);

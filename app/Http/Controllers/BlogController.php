@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\categriblog;
 use App\Models\Cblog;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -18,17 +19,22 @@ class BlogController extends Controller
     {
         $category = $request->input('categoris');
         $search = $request->input('query');
+        $tags = $request->input('tag');
 
         $query = Blog::query();
         if ($category) {
             $query->where('categriblogs_id', $category);
+        }
+        if ($tags) {
+            $query->where('tags_id', $tags);
         }
         $blog = $query->paginate(4);
 
         $blogcateg = categriblog::all();
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
         $item = Blog::all();
-        return view('pages.front.blog', compact('blog', 'blogcateg', 'request', 'recent'));
+        $tag = Tag::all();
+        return view('pages.front.blog', compact('blog', 'blogcateg', 'request', 'recent', 'tag'));
     }
 
     public function search(Request $request, $id)
@@ -77,7 +83,9 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
         $comment = Cblog::paginate(2);
-        return view('pages.front.showBlog', compact('blog', 'recent', 'comment'));
+        $count = Cblog::all()->where("blogs_id", $blog->id);
+        $comment2 = $count->count();
+        return view('pages.front.showBlog', compact('blog', 'recent', 'comment','comment2'));
     }
 
 

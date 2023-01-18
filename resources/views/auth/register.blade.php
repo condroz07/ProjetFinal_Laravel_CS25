@@ -19,10 +19,9 @@
                                     <input type="text" class="form-control" id="name" name="email" value=""
                                         placeholder="Email" required>
                                 </div>
-                                {{-- <div class="col-md-12 form-group p_star">
-                                    <input type="file" class="form-control" id="name" name="avatar" value=""
-                                        placeholder="Email" required>
-                                </div> --}}
+                                <div class="col-md-12 form-group p_star">
+                                    <input type="file" class="form-control" id="name" name="avatar" value="" required>
+                                </div>
                                 <div class="col-md-12 form-group p_star">
                                     <input type="password" class="form-control" id="password" name="password"
                                         value="" placeholder="Password">
@@ -33,7 +32,7 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <div class="creat_account d-flex align-items-center">
-                                        <input type="checkbox" id="f-option" name="selector">
+                                        {{ Form::checkbox('newsletter', true , old('newsletter')) }}
                                         <label for="f-option">Subscribe to newsletter</label>
                                     </div>
                                     <button type="submit" value="submit" class="btn_3">

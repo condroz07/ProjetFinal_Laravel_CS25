@@ -42,7 +42,7 @@
                                     <p>{{ substr($item->text, 0 , 263) . '...'}}</p>
                                     <ul class="blog-info-link">
                                         <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
-                                        <li><a href="#"><i class="far fa-comments"></i> {{ $item->cblog->count() }} Comments</a></li>
+                                        <li><a href="#"><i class="far fa-comments"></i>{{ DB::table('cblogs')->where('blogs_id', $item->id)->count() }} Comments</a></li>
                                     </ul>
                                 </div>
                             </article>
@@ -107,29 +107,13 @@
                             <h4 class="widget_title">Tag Clouds</h4>
                             <ul class="list">
                                 <li>
-                                    <a href="#">project</a>
+                                    <a href="/blog">All Tag</a>
                                 </li>
-                                <li>
-                                    <a href="#">love</a>
-                                </li>
-                                <li>
-                                    <a href="#">technology</a>
-                                </li>
-                                <li>
-                                    <a href="#">travel</a>
-                                </li>
-                                <li>
-                                    <a href="#">restaurant</a>
-                                </li>
-                                <li>
-                                    <a href="#">life style</a>
-                                </li>
-                                <li>
-                                    <a href="#">design</a>
-                                </li>
-                                <li>
-                                    <a href="#">illustration</a>
-                                </li>
+                                @foreach ($tag as $item)
+                                    <li>
+                                        <a href={{ $request->fullUrlWithQuery(['tag' => $item->id]) }}>{{ $item->name }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </aside>
 
