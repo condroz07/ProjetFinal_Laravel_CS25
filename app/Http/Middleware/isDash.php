@@ -17,7 +17,7 @@ class isDash
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role_id === 2) {
+        if (Auth::user()->role_id === 4) {
             return redirect()->route('home');
         }else {
             

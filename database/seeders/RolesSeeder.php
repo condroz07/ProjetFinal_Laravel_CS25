@@ -20,13 +20,13 @@ class RolesSeeder extends Seeder
                 "role" => "Admin"
             ],
             [
-                "role" => "Member"
-            ],
-            [
                 "role" => "Webmaster"
             ],
             [
                 "role" => "Redacteur"
+            ],
+            [
+                "role" => "Member"
             ],
         ]);
     }

@@ -106,6 +106,12 @@ class dashboardController extends Controller
         return view('pages.back.pages.user.user', compact('user', 'role'));
     }
 
+    public function delUser($id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->back()->with('success', 'utilisateur supprimer');
+    }
+
     public function editUser(Request $request, $id){
         $user = User::find($id);
         $user->role_id = $request->role_id;
@@ -121,9 +127,5 @@ class dashboardController extends Controller
     public function favoris(){
         $favoris = Favoris::paginate(9);
         return view('pages.back.pages.favoris.favoris', compact('favoris'));
-    }
-    
-    public function mail(){
-        $mails = Contact::paginate(9);
     }
 }

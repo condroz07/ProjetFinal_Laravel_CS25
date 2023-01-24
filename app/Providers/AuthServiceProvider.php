@@ -17,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Blog::class => BlogPolicy::class,
+        //
     ];
 
     /**
@@ -29,37 +29,49 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('create-blog', function () {
-            return Auth::user()->role_id != 2   ;
+        Gate::define('admin', function ($user) {
+            return $user->role_id === 1;
         });
-
-        Gate::define('edit-blog', function (User $user) {
-            $blog = Blog::all()->where('user_id', $user->id);
-            if (Auth::user()->role_id == 1) {
-                return true;
-            }else if ($user->role_id === 3) {
-                return true;
-            }else if ($user->role->role_id === 4) {
-                return true;
-            }
-            return false;
+        Gate::define('blog.create', function ($user) {
+            return $user->role_id === 1 || $user->role_id === 2 || $user->role_id === 3;
         });
         
-
-        Gate::define('delete-blog', function () {
-            $blog = Blog::all();
-            if (Auth::user()->role_id == 1) {
+        Gate::define('blog.edit', function ($user, $blog) {
+            if ($user->role_id === 1) {
                 return true;
-            }else if (Auth::user()->role_id == 3) {
+            } elseif ($user->role_id === 2 && $blog->user_id === $user->id) {
                 return true;
-            }else if (Auth::user()->role_id == 4) {
+            } elseif ($user->role_id === 3 && ($blog->user_id === $user->id || $blog->user->role_id === 2)) {
                 return true;
+            } else {
+                return false;
             }
-            return false;
         });
         
-        Gate::define('validate-blog', function () {
-            return Auth::user()->role_id == 4;
+        Gate::define('blog.delete', function ($user, $blog) {
+            if ($user->role_id === 1) {
+                return true;
+            } elseif ($user->role_id === 2 && $blog->user_id === $user->id) {
+                return true;
+            } elseif ($user->role_id === 3 && ($blog->user_id === $user->id || $blog->user->role_id === 2)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        Gate::define('product', function(){
+            if (Auth::user()->role_id === 1 || Auth::user()->role_id === 2) {
+                return true;
+            }
+        });
+
+        Gate::define('edit-user', function ($userToEdit) {
+            return Auth::user()->role_id === 1 && Auth::user()->id !== $userToEdit->id;
+        });
+        
+        Gate::define('delete-user', function ($userToDelete) {
+            return Auth::user()->role_id === 1 && Auth::user()->id !== $userToDelete->id;
         });
     }
 }

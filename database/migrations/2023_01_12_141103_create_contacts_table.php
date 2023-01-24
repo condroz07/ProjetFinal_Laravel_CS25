@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('sujet');
             $table->string('name');
             $table->string('msg');
+            $table->boolean('isValidated')->default(false);
+            $table->boolean('isShow')->default(false);
             $table->timestamps();
         });
     }

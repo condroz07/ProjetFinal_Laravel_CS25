@@ -41,7 +41,7 @@
                             </li>
 
                             @auth
-                                @if (Auth::user()->role_id === 2)
+                                @if (Auth::user()->role_id === 4)
                                 @else
                                     <li class="nav-item">
                                         <a class="nav-link" href="/dashboard">Dashboard</a>

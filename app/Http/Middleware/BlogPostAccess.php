@@ -17,32 +17,37 @@ class BlogPostAccess
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
         $blogId = $request->route('id');
         $blog = Blog::find($blogId);
-    
-    if (Auth::user()->role_id === 1) {
-        // Les utilisateurs avec le rôle "admin" peuvent créer, éditer et supprimer tous les blogs
-        return $next($request);
-    } elseif (Auth::user()->role_id === 3) {
-        if ($request->isMethod('POST')) {
-            // Les utilisateurs avec le rôle "webmaster" peuvent créer des blogs, mais uniquement éditer et supprimer leurs propres blogs
-            if ($blog->author_id !== Auth::user()->id) {
-                return response(['error' => 'Vous n\'avez pas la permission d\'éditer ce blog'], 403);
+
+        if (Auth::user()->role_id === 1) {
+
+            return $next($request);
+        } elseif (Auth::user()->role_id === 2) {
+            if (Auth::user()->role_id === 2 && $request->route()->getName() == 'blog.create') {
+                return $next($request);
+                
+            } elseif ($request->route()->getName() === 'blog.edit' && $blog->user_id === Auth::user()->id) {
+                return $next($request);
+            } elseif ($request->route()->getName() === 'blog.delete' && ($blog->user_id == Auth::user()->id && Auth::user()->role_id === 2)) {
+                return $next($request);
+            } else {
+                return redirect()->back()->with('danger', "Vous n'avez pas les autorisations pour effectuer cette action");
             }
-        }
-        return $next($request);
-    } elseif (Auth::user()->role_id === 4) {
-        if ($request->isMethod('POST')) {
-            // Les utilisateurs avec le rôle "redacteur" peuvent créer des blogs, mais uniquement éditer et supprimer leurs propres blogs et ceux des webmasters
-            if ($blog->author_id !== Auth::user()->id && !Auth::user()->role_id === 3) {
-                return response(['error' => 'Vous n\'avez pas la permission d\'éditer ce blog'], 403);
+        } elseif (Auth::user()->role_id === 3) {
+            if ( $request->route()->getName() === 'blog.create') {
+                return $next($request);
+            } elseif (Auth::user()->role_id === 3 && $request->route()->getName() === 'blog.edit' && ($blog->user_id === Auth::user()->id || $blog->user->role_id === 2)) {
+                return $next($request);
+            } elseif (Auth::user()->role_id === 3 && $request->route()->getName() === 'blog.delete' && ($blog->user_id === Auth::user()->id || $blog->user->role_id === 2)) {
+                return $next($request);
+            } else {
+                return redirect()->back()->with('danger', "Vous n'avez pas les autorisations pour effectuer cette action");
             }
+        } else {
+            return redirect()->back()->with('danger', "Vous n'avez pas les autorisations pour effectuer cette action");
         }
-        return $next($request);
     }
-    return response(['error' => 'Vous n\'avez pas les permissions nécessaires pour effectuer cette action'], 403);
-}
 }

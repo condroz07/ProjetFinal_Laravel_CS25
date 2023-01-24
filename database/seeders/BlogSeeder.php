@@ -179,7 +179,7 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "isValidated" => true,
-                "user_id" => 4,
+                "user_id" => 2,
                 "categriblogs_id" => 4,
                 "created_at" => "2023-01-12 15:12:05",
                 "tags_id" => 5
@@ -221,7 +221,7 @@ class BlogSeeder extends Seeder
                 fraction of the camp price. However, who has the willpower to actually sit through a
                 self-imposed MCSE training. who has the willpower to actually',
                 "isValidated" => true,
-                "user_id" => 4,
+                "user_id" => 2,
                 "categriblogs_id" => 5,
                 "created_at" => "2023-01-12 15:12:05",
                 "tags_id" => 3

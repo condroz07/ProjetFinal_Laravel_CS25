@@ -5,17 +5,22 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Rôle</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($user as $users)
-                    <form action="/editUser/{{ $users->id }}" method="POST">
-                        @csrf
-                        <tr>
-                            <td>{{ $users->name }}</td>
+                    <tr>
+                        <td>{{ $users->id }}</td>
+                        <td>{{ $users->name }}</td>
+                        <td>{{ $users->email }}</td>
+                        <form action="/editUser/{{ $users->id }}" method="POST">
+                            @csrf
                             <td>
                                 <select name="role_id" id="">
                                     <option selected>{{ $users->role->role }}</option>
@@ -28,10 +33,21 @@
                                 </select>
                             </td>
                             <td>
-                                <button type="submit" class="btn_3">Edit</button>
+                                @can('edit-user', $users)
+                                    <button type="submit" class="btn_3">Edit</button>
+                                @endcan
                             </td>
-                        </tr>
-                    </form>
+                        </form>
+                        <td>
+                            @can('delete-user', $users)
+                                <form action="/user/delete/{{ $users->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn_3" type="submit">DELETE</button>
+                                </form>
+                            @endcan
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
