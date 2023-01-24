@@ -6,7 +6,9 @@ use App\Models\Blog;
 use App\Models\categriblog;
 use App\Models\Cblog;
 use App\Models\Tag;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -34,7 +36,7 @@ class BlogController extends Controller
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
         $item = Blog::all();
         $tag = Tag::all();
-        return view('pages.front.blog', compact('blog', 'blogcateg', 'request', 'recent', 'tag'));
+        return view('pages.front.blog.blog', compact('blog', 'blogcateg', 'request', 'recent', 'tag'));
     }
 
     public function search(Request $request, $id)
@@ -48,7 +50,7 @@ class BlogController extends Controller
         $blogcateg = categriblog::all();
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
         $comment = Cblog::find($id)->count();
-        return view('pages.front.blog', compact('blog', 'request', 'blogcateg', 'recent'));
+        return view('pages.front.blog.blog', compact('blog', 'request', 'blogcateg', 'recent'));
     }
 
     /**
@@ -85,7 +87,7 @@ class BlogController extends Controller
         $comment = Cblog::paginate(2);
         $count = Cblog::all()->where("blogs_id", $blog->id);
         $comment2 = $count->count();
-        return view('pages.front.showBlog', compact('blog', 'recent', 'comment','comment2'));
+        return view('pages.front.blog.showBlog', compact('blog', 'recent', 'comment','comment2'));
     }
 
 
@@ -107,9 +109,15 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(Request $request, $id)
     {
-        //
+        $blog = Blog::find($id);
+        $blog->name = $request->name;
+        $blog->text = $request->text;
+        $blog->text2 = $request->text2;
+        $blog->text3 = $request->text3;
+        $blog->save();
+        return redirect()->back()->with('success','Vos modification on été enregistrer avec success');
     }
 
     /**
@@ -118,8 +126,11 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function destroy(Blog $blog, $id)
     {
-        //
+        $delete = Blog::find($id);
+        $delete->delete();
+        
+        return redirect()->back()->with('success', 'Le produit a été supprimer');
     }
 }

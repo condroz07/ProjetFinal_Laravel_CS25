@@ -40,12 +40,14 @@
                                 <a class="nav-link" href="/contact">Contact</a>
                             </li>
 
-                            @if (Auth::user()->role_id === 2)
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/dashboard">Dashboard</a>
-                                </li>
-                            @endif
+                            @auth
+                                @if (Auth::user()->role_id === 2)
+                                @else
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                                    </li>
+                                @endif
+                            @endauth
                         </ul>
                     </div>
                     @if (Auth::user() == true)

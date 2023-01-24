@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('products_id')->constrained()->onDelete('cascade');
+            $table->integer('quantite');
+            $table->integer('order');
+            $table->foreignId('order_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

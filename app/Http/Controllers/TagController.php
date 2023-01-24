@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Couleur;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class CouleurController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +15,6 @@ class CouleurController extends Controller
     public function index()
     {
         //
-    }
-
-    public function newColor(Request $request)
-    {
-        if (Couleur::all()->where('name', $request->name)->count() == 0) {
-            $create = new Couleur();
-            $create->name = $request->name;
-            $create->save();
-            return redirect()->back()->with('success', 'Nouvelle couleur crée');
-        }else{
-            return redirect()->back()->with('danger', 'Cette couleur existe déjà');
-        }
     }
 
     /**
@@ -47,16 +35,19 @@ class CouleurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $new = new Tag();
+        $new->name = $request->name;
+        $new->save();
+        return redirect()->route('tag.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Couleur  $couleur
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Couleur $couleur)
+    public function show($id)
     {
         //
     }
@@ -64,10 +55,10 @@ class CouleurController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Couleur  $couleur
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Couleur $couleur)
+    public function edit($id)
     {
         //
     }
@@ -76,10 +67,10 @@ class CouleurController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Couleur  $couleur
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Couleur $couleur)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -87,12 +78,12 @@ class CouleurController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Couleur  $couleur
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Couleur $couleur, $id)
+    public function destroy($id)
     {
-        $delete = Couleur::find($id);
+        $delete = Tag::find($id);
         $delete->delete();
         return redirect()->back()->with('success', 'La couleur a été supprimer');
     }

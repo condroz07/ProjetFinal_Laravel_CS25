@@ -3,9 +3,12 @@
 
 use App\Http\Controllers\Aranoz2;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategorisController;
+use App\Http\Controllers\CategriblogController;
 use App\Http\Controllers\CblogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CouleurController;
 use App\Http\Controllers\CproductController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\FavorisController;
@@ -16,8 +19,8 @@ use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SoldesController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
-use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,28 +93,83 @@ Route::post('panier/changerQuantite/{id}',[PanierController::class, 'changerQuan
 
 // Checkout
 
-Route::get('/checkout', [CheckoutController::class, 'index']);
+Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('isGuest');
 
 // code
 
-Route::post('/checkout/code', [CheckoutController::class, 'applyDiscount']);
+Route::post('/checkout/code', [CheckoutController::class, 'applyDiscount'])->middleware('isGuest');
 
 // order
 
-Route::get('/order', [OrderController::class, 'index'])->middleware('isGuest');
+Route::get('/order', [OrderController::class, 'index'])->name('order')->middleware('isGuest');
+Route::post('/order', [OrderController::class, 'store'])->name('order-post')->middleware('isGuest');
 
 //                      Back office
 
 // dashboard
 
-Route::get('/dashboard', [Aranoz2::class, 'dashboard'])->name('dashboard')->middleware('isDash');
+Route::get('/dashboard', [Aranoz2::class, 'dashboard'])->name('dashboard')->middleware('isGuest','isDash');
 
-// Products
+//                                    Products
+Route::get('/allProducts', [dashboardController::class, 'products'])->middleware('isGuest','isWebmaster');
+Route::delete('/deleteProduct/{id}', [ProductController::class, 'destroy'])->middleware('isGuest','isAdmin');
 
-Route::get('/allProducts', [dashboardController::class, 'products'])->middleware('isAdmin');
+Route::get('/allColor', [dashboardController::class, 'allColor'])->middleware('isGuest','isAdmin');
+Route::get('/colorProducts', [dashboardController::class, 'newColor'])->middleware('isGuest','isAdmin');
+Route::post('/newColor', [CouleurController::class, 'newColor'])->middleware('isGuest','isAdmin');
+Route::delete('/deleteColor/{id}',[CouleurController::class, 'destroy'])->middleware('isGuest','isAdmin');
+
+Route::get('/allCateg', [dashboardController::class, 'allCateg'])->middleware('isGuest','isAdmin');
+Route::get('/categProducts', [dashboardController::class, 'newCateg'])->middleware('isGuest','isAdmin');
+Route::post('/newCateg', [CategorisController::class, 'newCateg'])->middleware('isGuest','isAdmin');
+Route::delete('/deleteCateg/{id}', [CategorisController::class, 'destroy'])->middleware('isGuest','isAdmin');
+
+
+//newProducts
+Route::get('/newProducts', [dashboardController::class, "newProducts"])->middleware('isGuest', 'isWebmaster');
+Route::post('/createProduct', [ProductController::class, 'newProduct'])->middleware('isGuest', 'isWebmaster');
+
 // editProduct
-Route::get('/editProducts/{id}', [dashboardController::class, 'editProducts'])->middleware('isAdmin');
-Route::post('/updateProducts/{id}', [ProductController::class, 'update'])->middleware('isAdmin');
+Route::get('/editProducts/{id}', [dashboardController::class, 'editProducts'])->middleware('isGuest', 'isWebmaster');
+Route::post('/updateProducts/{id}', [ProductController::class, 'update'])->middleware('isGuest', 'isWebmaster');
+
+
+//                                        Blog
+
+Route::get('/allBlog', [dashboardController::class, 'blog'])->middleware('isGuest', 'isMember');
+
+Route::middleware(['auth','BlogPostAccess'])->group(function(){
+    Route::get('/createBlog',[dashboardController::class, 'createBlog'])->name('create-blog');
+    Route::delete('/deleteBlog/{id}', [BlogController::class, 'destroy'])->name('delete-blog');
+    Route::get('/editBlog/{id}', [dashboardController::class, 'editBlog'])->name('edit-blog');
+    Route::post('/updateBlog/{id}', [BlogController::class, 'update'])->name('update-blog');
+});
+
+// categoris blog
+
+Route::get('/categBlog', [dashboardController::class, 'cblog'])->name('categBlog.index')->middleware('isGuest','isAdmin');
+Route::get('/newCategBlog', [dashboardController::class, 'newCategBlog'])->middleware('isGuest','isAdmin');
+Route::delete('/deleteCategBlog/{id}', [CategriblogController::class, 'destroy'])->middleware('isGuest','isAdmin');
+Route::post('/newCategBlog', [CategriblogController::class, 'store'])->middleware('isGuest','isAdmin');
+
+// Tag Blog
+
+Route::get('/tagBlog', [dashboardController::class, 'tag'])->name('tag.index')->middleware('isGuest','isAdmin');
+Route::get('/newTagBlog', [dashboardController::class, 'newTagBlog'])->middleware('isGuest','isAdmin');
+Route::delete('/deleteTagBlog/{id}', [TagController::class, 'destroy'])->middleware('isGuest','isAdmin');
+Route::post('/newTagBlog', [TagController::class, 'store'])->middleware('isGuest','isAdmin');
+
+// User
+Route::get('/user', [dashboardController::class, 'user'])->middleware('isGuest','isAdmin');
+Route::post('/editUser/{id}', [dashboardController::class, 'editUser'])->middleware('isGuest','isAdmin');
+
+// contact
+Route::get('/backContact/1', [dashboardController::class, 'contact'])->middleware('isGuest','isAdmin');
+Route::post('/editContact/{id}', [ContactController::class, 'update'])->middleware('isGuest','isAdmin');
+
+// favoris
+
+Route::get('/favoris',[dashboardController::class, 'favoris'])->middleware('isGuest','isAdmin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

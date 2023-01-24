@@ -18,4 +18,7 @@ class Blog extends Model
     public function cblog() {
         return $this->hasMany(Cblog::class);
     }
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

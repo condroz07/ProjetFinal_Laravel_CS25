@@ -35,7 +35,10 @@ class CategriblogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $new = new categriblog();
+        $new->name = $request->name;
+        $new->save();
+        return redirect()->route('categBlog.index');
     }
 
     /**
@@ -78,8 +81,10 @@ class CategriblogController extends Controller
      * @param  \App\Models\categriblog  $categriblog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(categriblog $categriblog)
+    public function destroy(categriblog $categriblog, $id)
     {
-        //
+        $delete = categriblog::find($id);
+        $delete->delete();
+        return redirect()->back()->with('success', 'La couleur a été supprimer');
     }
 }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('prix');
             $table->integer('quantite')->default(1);
-            $table->foreignId('categoris_id')->constrained();
-            $table->foreignId('couleur_id')->constrained();
+            $table->foreignId('categoris_id')->constrained()->onDelete('cascade');
+            $table->foreignId('couleur_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -28,7 +28,7 @@ class CheckoutController extends Controller
             });
             $code = Discount::where('code', $request->input('code'))->first();
             $order = rand(111111, 999999);
-            return view('pages.front.checkout', compact('panier', 'total', 'code', 'order'));
+            return view('pages.front.panier.checkout.checkout', compact('panier', 'total', 'code', 'order'));
         }
     }
     public function applyDiscount(Request $request)

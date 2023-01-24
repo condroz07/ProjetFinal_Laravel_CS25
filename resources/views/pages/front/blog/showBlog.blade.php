@@ -13,7 +13,7 @@
                             </h2>
                             <ul class="blog-info-link mt-3 mb-4">
                                 <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
-                                <li><a href="#"><i class="far fa-comments"></i> {{ $comment2 }} Comments</a></li>
+                                <li><a href="a#"><i class="far fa-comments"></i> {{ $comment2 }} Comments</a></li>
                             </ul>
                             <p class="excert">
                                 {{ $blog->text }}

@@ -27,7 +27,7 @@
                         @foreach ($blog as $item)
                             <article class="blog_item">
                                 <div class="blog_item_img">
-                                    <img class="card-img rounded-0" src="{{ asset('img/blog/' . $item->src) }}"
+                                    <img class="card-img rounded-0" src="{{ asset('storage/' . $item->src) }}"
                                         alt="">
                                     <a href="#" class="blog_item_date">
                                         <h3>{{ $item->created_at->day }}</h3>
@@ -93,7 +93,7 @@
                             <h3 class="widget_title">Recent Post</h3>
                             @foreach ($recent as $item)
                                 <div class="media post_item">
-                                    <img src="{{ asset('img/blog/' . $item->src) }}" alt="post" style="height: 5vh">
+                                    <img src="{{ asset('storage/' . $item->src) }}" alt="post" style="height: 5vh">
                                     <div class="media-body">
                                         <a href="single-blog.html">
                                             <h3>{{ $item->name }}</h3>

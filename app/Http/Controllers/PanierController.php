@@ -18,7 +18,7 @@ class PanierController extends Controller
             return $item->products->prix * $item->quantite;
         });
 
-        return view('pages.front.panier', compact('panier', 'total','produits'));
+        return view('pages.front.panier.panier', compact('panier', 'total','produits'));
     }
 
     public function addProduct(Request $request, Product $product)

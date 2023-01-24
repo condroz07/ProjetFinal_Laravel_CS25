@@ -66,5 +66,8 @@ class Kernel extends HttpKernel
         'isGuest' => \App\Http\Middleware\isGuest::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::class,
         'isDash' => \App\Http\Middleware\isDash::class,
+        'isMember' => \App\Http\Middleware\isMember::class,
+        'isWebmaster' => \App\Http\Middleware\isWebmaster::class,
+        'BlogPostAccess' => \App\Http\Middleware\BlogPostAccess::class,
     ];
 }

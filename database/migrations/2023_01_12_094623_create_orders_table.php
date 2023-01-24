@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email');
+            $table->integer('postale');
             $table->string('adresse');
             $table->string('number');
             $table->string('city');
             $table->integer('order');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('products_id')->constrained();
             $table->timestamps();
         });
     }

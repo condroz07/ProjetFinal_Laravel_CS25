@@ -7,6 +7,7 @@ use App\Models\Couleur;
 use App\Models\Cproduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -38,7 +39,7 @@ class ProductController extends Controller
         $categoris = Categoris::all();
         $color = Couleur::all();
         $bestseller = Product::all()->where('quantite', '<=', '5');
-        return view('pages.front.product', compact( 'categoris', 'color', 'bestseller', 'products', 'request'));
+        return view('pages.front.products.product', compact( 'categoris', 'color', 'bestseller', 'products', 'request'));
     }
 
     public function search(Request $request)
@@ -52,7 +53,20 @@ class ProductController extends Controller
         $categoris = Categoris::all();
         $color = Couleur::all();
         $bestseller = Product::all()->where('quantite', '<=', '5');
-        return view('pages.front.product', compact('categoris', 'color', 'bestseller','products', 'request'));
+        return view('pages.front.products.product', compact('categoris', 'color', 'bestseller','products', 'request'));
+    }
+    public function newProduct(Request $request)
+    {
+        $create = new Product();
+        $create->name = $request->name;
+        $create->quantite = $request->quantite;
+        $create->categoris_id = $request->categoris_id;
+        $create->couleur_id = $request->couleur_id;
+        $create->prix = $request->prix;
+        $create->src = $request->file('src')->hashName();
+        Storage::put('public/', $request->file('src'));
+        $create->save();
+        return redirect()->back();
     }
 
     /**
@@ -60,7 +74,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -87,7 +101,7 @@ class ProductController extends Controller
         $products = Product::find($id);
         $bestseller = Product::all()->where('quantite', '<=', '5');
         $comment = Cproduct::all();
-        return view('pages.front.showProduct', compact('products', 'bestseller', 'comment'));
+        return view('pages.front.products.showProduct', compact('products', 'bestseller', 'comment'));
     }
 
     /**
@@ -113,7 +127,7 @@ class ProductController extends Controller
         $update = Product::find($id);
         $update->quantite = $request->quantite;
         $update->save();
-        return redirect()->back();
+        return redirect()->back()->with('success','Vos modification on été enregistrer avec success');
     }
 
     /**
@@ -122,8 +136,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product, $id)
     {
-        //
+        $delete = Product::find($id);
+        $delete->delete();
+
+        return redirect()->back()->with('success', 'Le produit a été supprimer');
     }
 }

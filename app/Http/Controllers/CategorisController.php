@@ -17,6 +17,17 @@ class CategorisController extends Controller
         //
     }
 
+    public function newCateg(Request $request){
+        if (Categoris::all()->where('name', $request->name)->count() == 0) {
+            $create = new Categoris();
+            $create->name = $request->name;
+            $create->save();
+            return redirect()->back()->with('success', 'Nouvelle couleur crée');
+        }else{
+            return redirect()->back()->with('danger', 'Cette couleur existe déjà');
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -78,8 +89,10 @@ class CategorisController extends Controller
      * @param  \App\Models\Categoris  $categoris
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoris $categoris)
+    public function destroy(Categoris $categoris, $id)
     {
-        //
+        $delete = Categoris::find($id);
+        $delete->delete();
+        return redirect()->back()->with('success', 'La couleur a été supprimer');
     }
 }

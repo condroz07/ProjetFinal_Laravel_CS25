@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkout;
 use App\Models\Order;
+use App\Models\Panier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -14,7 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('pages.front.order');
+        $checkout = Checkout::all()->where('user_id', Auth::user()->id)->last();
+        // $order = Order::all()->where();
+        return view('pages.front.panier.order');
     }
 
     /**
@@ -35,7 +40,39 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Order::create([
+            "firstname" => $request->firstname,
+            "lastname" => $request->lastname,
+            "email" => $request->email,
+            "adresse" => $request->adresse,
+            "number" => $request->number,
+            "city" => $request->city,
+            "postale" => $request->postale,
+            "order" => $request->order,
+            "user_id" => $request->user_id
+        ]);
+
+        $cart = Panier::where('user_id', Auth::user()->id)->get();
+
+        if($cart) {
+            
+            foreach($cart as $item) {
+                Checkout::create([
+                    'user_id' => Auth::user()->id,
+                    'products_id' => $item->products_id,
+                    'quantite' => $item->quantite,
+                    'order' => $request->order,
+                    'order_id' => Order::latest()->first()->id
+                ]);
+            }
+
+
+            Panier::where('user_id', Auth::user()->id)->delete();
+
+            return redirect()->route('order');
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -59,7 +96,6 @@ class OrderController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *

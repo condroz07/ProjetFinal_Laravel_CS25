@@ -78,9 +78,17 @@ class ContactController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, $id)
     {
-        //
+        $edit = Adresse::find($id);
+        $edit->entreprise = $request->entreprise;
+        $edit->ville = $request->ville;
+        $edit->adresse = $request->adresse;
+        $edit->postale = $request->postale;
+        $edit->phone = $request->phone;
+        $edit->email = $request->email;
+        $edit->save();
+        return redirect()->back()->with('success', 'Modification effectuer');
     }
 
     /**

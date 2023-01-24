@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Checkout extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id', 'products_id', 'quantite', 'order','order_id'
+    ];
+    
+    public function products() {
+        return $this->belongsTo(Product::class);
+    }
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+    public function order() {
+        return $this->belongsTo(Order::class);
+    }
 }

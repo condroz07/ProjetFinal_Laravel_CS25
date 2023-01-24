@@ -27,4 +27,7 @@ class Product extends Model
     public function cproduct() {
         return $this->hasMany(Cproduct::class);
     }
+    public function checkout() {
+        return $this->hasMany(Checkout::class);
+    }
 }

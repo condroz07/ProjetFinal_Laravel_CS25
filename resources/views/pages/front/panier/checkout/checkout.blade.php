@@ -31,7 +31,7 @@
                 <input type="text" placeholder="Enter coupon code" name="discount" />
                 <button type="submit" class="tp_btn" >Apply Coupon</button>
             </form>
-            <form action="#" method="post" class="billing_details">
+            <form action="{{ route('order-post') }}" method="post" class="billing_details">
                 @csrf
                 <div class="row">
                     <div class="col-lg-8">
@@ -83,6 +83,7 @@
                                     <li>
                                         <a href="#">{{ $item->products->name }}
                                             <span class="middle">X{{ $item->quantite }}</span>
+                                            <input type="text" name="quantite" value="{{ $item->quantite }}" class="d-none">
                                             <span class="last">{{ $item->products->prix * $item->quantite }} €</span>
                                         </a>
                                     </li>

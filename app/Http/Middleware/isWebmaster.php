@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class isAdmin
+class isWebmaster
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,10 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role_id === 1) {
-            
+        if (Auth::user()->role_id === 3 || Auth::user()->role_id === 1) {
+
         }else{
-            return redirect()->back()->with('danger', "vous n'avez pas l'autorisation pour effectuer ceci");
+            return redirect()->route('home');
         }
         return $next($request);
     }
