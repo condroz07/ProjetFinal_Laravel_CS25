@@ -32,16 +32,13 @@
                         <h4>order info</h4>
                         <ul>
                             <li>
-                                <p>order number</p><span>: 60235</span>
+                                <p>order number</p><span>: {{ $checkout->order }}</span>
                             </li>
                             <li>
-                                <p>data</p><span>: Oct 03, 2017</span>
+                                <p>data</p><span>: {{ $checkout->created_at->toFormattedDateString('j F Y') }}</span>
                             </li>
                             <li>
-                                <p>total</p><span>: USD 2210</span>
-                            </li>
-                            <li>
-                                <p>mayment methord</p><span>: Check payments</span>
+                                <p>total</p><span>: {{ $checkout->products->prix * $checkout->quantite }}€</span>
                             </li>
                         </ul>
                     </div>
@@ -51,16 +48,13 @@
                         <h4>Billing Address</h4>
                         <ul>
                             <li>
-                                <p>Street</p><span>: 56/8</span>
+                                <p>Street</p><span>: {{ $adresse->adresse }}</span>
                             </li>
                             <li>
-                                <p>city</p><span>: Los Angeles</span>
+                                <p>country</p><span>: {{ $adresse->ville }}</span>
                             </li>
                             <li>
-                                <p>country</p><span>: United States</span>
-                            </li>
-                            <li>
-                                <p>postcode</p><span>: 36952</span>
+                                <p>postcode</p><span>: {{ $adresse->postale }}</span>
                             </li>
                         </ul>
                     </div>
@@ -70,16 +64,13 @@
                         <h4>shipping Address</h4>
                         <ul>
                             <li>
-                                <p>Street</p><span>: 56/8</span>
+                                <p>Street</p><span>: {{ $order->adresse }}</span>
                             </li>
                             <li>
-                                <p>city</p><span>: Los Angeles</span>
+                                <p>country</p><span>: {{ $order->city }}</span>
                             </li>
                             <li>
-                                <p>country</p><span>: United States</span>
-                            </li>
-                            <li>
-                                <p>postcode</p><span>: 36952</span>
+                                <p>postcode</p><span>: {{ $order->postale }}</span>
                             </li>
                         </ul>
                     </div>
@@ -99,27 +90,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th colspan="2"><span>Pixelstore fresh Blackberry</span></th>
-                                    <th>x02</th>
-                                    <th> <span>$720.00</span></th>
-                                </tr>
-                                <tr>
-                                    <th colspan="2"><span>Pixelstore fresh Blackberry</span></th>
-                                    <th>x02</th>
-                                    <th> <span>$720.00</span></th>
-                                </tr>
-                                <tr>
-                                    <th colspan="2"><span>Pixelstore fresh Blackberry</span></th>
-                                    <th>x02</th>
-                                    <th> <span>$720.00</span></th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">Subtotal</th>
-                                    <th> <span>$2160.00</span></th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">shipping</th>
-                                    <th><span>flat rate: $50.00</span></th>
+                                    <th colspan="2"><span>{{ $checkout->products->name }}</span></th>
+                                    <th>{{ $checkout->quantite }}</th>
+                                    <th> <span>{{ $checkout->products->prix * $checkout->quantite }}€</span></th>
                                 </tr>
                             </tbody>
                             <tfoot>

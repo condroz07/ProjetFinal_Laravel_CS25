@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adresse;
 use App\Models\Checkout;
 use App\Models\Order;
 use App\Models\Panier;
@@ -17,9 +18,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $checkout = Checkout::all()->where('user_id', Auth::user()->id)->last();
-        // $order = Order::all()->where();
-        return view('pages.front.panier.order');
+        if(Auth::user()->checkout->isEmpty()){
+            return redirect()->back()->with('danger', 'Vous n\'avez pas encore fait de commande sur notre site');
+        }else{
+            $checkout = Checkout::all()->where('user_id', Auth::user()->id)->last();
+            $order = Order::all()->where('user_id', Auth::user()->id)->last();
+            $adresse = Adresse::all()->last();
+            return view('pages.front.panier.order.order', compact('order', 'checkout', 'adresse'));
+        }
     }
 
     /**
@@ -40,23 +46,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        Order::create([
-            "firstname" => $request->firstname,
-            "lastname" => $request->lastname,
-            "email" => $request->email,
-            "adresse" => $request->adresse,
-            "number" => $request->number,
-            "city" => $request->city,
-            "postale" => $request->postale,
-            "order" => $request->order,
-            "user_id" => $request->user_id
-        ]);
-
+        $order = $request->input('order', false);
         $cart = Panier::where('user_id', Auth::user()->id)->get();
 
-        if($cart) {
-            
-            foreach($cart as $item) {
+        if ($order) {
+
+            Order::create([
+                "firstname" => $request->firstname,
+                "lastname" => $request->lastname,
+                "email" => $request->email,
+                "adresse" => $request->adresse,
+                "number" => $request->number,
+                "city" => $request->city,
+                "postale" => $request->postale,
+                "order" => $request->order,
+                "user_id" => $request->user_id
+            ]);
+
+            foreach ($cart as $item) {
                 Checkout::create([
                     'user_id' => Auth::user()->id,
                     'products_id' => $item->products_id,
@@ -70,9 +77,9 @@ class OrderController extends Controller
             Panier::where('user_id', Auth::user()->id)->delete();
 
             return redirect()->route('order');
+        }else{
+            return redirect()->back()->with('danger', 'Veuiller accepter les conditions avant de payer');
         }
-
-        return redirect()->back();
     }
 
     /**

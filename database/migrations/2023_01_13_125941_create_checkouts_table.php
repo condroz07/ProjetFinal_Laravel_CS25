@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('products_id')->constrained()->onDelete('cascade');
             $table->integer('quantite');
             $table->integer('order');
+            $table->boolean('isValidated')->default(false);
             $table->foreignId('order_id')->constrained();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
