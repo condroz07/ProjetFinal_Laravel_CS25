@@ -33,7 +33,9 @@ class BlogPostAccess
                 return $next($request);
             } elseif ($request->route()->getName() === 'blog.delete' && ($blog->user_id == Auth::user()->id && Auth::user()->role_id === 2)) {
                 return $next($request);
-            } else {
+            } elseif($request->route()->getName() === 'blog.validate'){
+                return redirect()->back()->with('danger', "Vous n'avez pas les autorisations pour effectuer cette action");
+            }else {
                 return redirect()->back()->with('danger', "Vous n'avez pas les autorisations pour effectuer cette action");
             }
         } elseif (Auth::user()->role_id === 3) {
@@ -43,7 +45,9 @@ class BlogPostAccess
                 return $next($request);
             } elseif (Auth::user()->role_id === 3 && $request->route()->getName() === 'blog.delete' && ($blog->user_id === Auth::user()->id || $blog->user->role_id === 2)) {
                 return $next($request);
-            } else {
+            } elseif(Auth::user()->role_id === 3 && $request->route()->getName() === 'blog.validate' && ($blog->user_id === Auth::user()->id || $blog->user->role_id === 2)){
+                return $next($request);
+            }else {
                 return redirect()->back()->with('danger', "Vous n'avez pas les autorisations pour effectuer cette action");
             }
         } else {

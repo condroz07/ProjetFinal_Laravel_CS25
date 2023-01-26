@@ -140,8 +140,10 @@ Route::get('/allBlog', [dashboardController::class, 'blog'])->middleware('isGues
 Route::middleware(['auth', 'BlogPostAccess'])->group(function () {
     Route::get('/editBlog/{id}', [dashboardController::class, 'editBlog'])->name('blog.edit');
     Route::get('/createBlog', [dashboardController::class, 'createBlog'])->name('blog.create');
+    Route::post('/createNewBlog', [BlogController::class, 'store'])->name('blog.create');
     Route::delete('/deleteBlog/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
     Route::post('/updateBlog/{id}', [BlogController::class, 'update'])->name('blog.edit');
+    Route::post('/validateBlog/{id}', [dashboardController::class ,'validateBlog'])->name('blog.validate');
 });
 
 // categoris blog

@@ -1,6 +1,6 @@
 @extends('layouts.dash')
 @section('content')
-    <form class="container mt-5 pt-5" method="POST" action="/createBlog" enctype="multipart/form-data">
+    <form class="container mt-5 pt-5" method="POST" action="/createNewBlog" enctype="multipart/form-data">
         @csrf
         <div class="row contact_form">
             <div class="col-md-6 form-group p_star">
@@ -43,7 +43,7 @@
                 </select>
             </div>
             <div class="d-flex justify-content-center">
-                <button class="btn_3">Create</button>
+                <button type="submit" class="btn_3">Create</button>
             </div>
         </div>
     </form>

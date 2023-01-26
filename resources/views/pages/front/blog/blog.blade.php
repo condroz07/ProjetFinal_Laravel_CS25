@@ -25,27 +25,32 @@
                 <div class="col-lg-8 mb-5 mb-lg-0">
                     <div class="blog_left_sidebar">
                         @foreach ($blog as $item)
-                            <article class="blog_item">
-                                <div class="blog_item_img">
-                                    <img class="card-img rounded-0" src="{{ asset('storage/' . $item->src) }}"
-                                        alt="">
-                                    <a href="#" class="blog_item_date">
-                                        <h3>{{ $item->created_at->day }}</h3>
-                                        <p>{{  date('M', strtotime($item->created_at))  }}</p>
-                                    </a>
-                                </div>
+                            @if ($item->isValidated === 1)
+                                <article class="blog_item">
+                                    <div class="blog_item_img">
+                                        <img class="card-img rounded-0" src="{{ asset('storage/' . $item->src) }}"
+                                            alt="">
+                                        <a href="#" class="blog_item_date">
+                                            <h3>{{ $item->created_at->day }}</h3>
+                                            <p>{{ date('M', strtotime($item->created_at)) }}</p>
+                                        </a>
+                                    </div>
 
-                                <div class="blog_details">
-                                    <a class="d-inline-block" href="/showBlog/{{ $item->id }}">
-                                        <h2>{{ $item->name }}</h2>
-                                    </a>
-                                    <p>{{ substr($item->text, 0 , 263) . '...'}}</p>
-                                    <ul class="blog-info-link">
-                                        <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
-                                        <li><a href="#"><i class="far fa-comments"></i>{{ DB::table('cblogs')->where('blogs_id', $item->id)->count() }} Comments</a></li>
-                                    </ul>
-                                </div>
-                            </article>
+                                    <div class="blog_details">
+                                        <a class="d-inline-block" href="/showBlog/{{ $item->id }}">
+                                            <h2>{{ $item->name }}</h2>
+                                        </a>
+                                        <p>{{ substr($item->text, 0, 263) . '...' }}</p>
+                                        <ul class="blog-info-link">
+                                            <li><a href="#"><i class="far fa-user"></i> Travel, Lifestyle</a></li>
+                                            <li><a href="#"><i
+                                                        class="far fa-comments"></i>{{ DB::table('cblogs')->where('blogs_id', $item->id)->count() }}
+                                                    Comments</a></li>
+                                        </ul>
+                                    </div>
+                                </article>
+                            @else
+                            @endif
                         @endforeach
 
                         @if (request()->routeIs('blog-index'))
@@ -111,7 +116,8 @@
                                 </li>
                                 @foreach ($tag as $item)
                                     <li>
-                                        <a href={{ $request->fullUrlWithQuery(['tag' => $item->id]) }}>{{ $item->name }}</a>
+                                        <a
+                                            href={{ $request->fullUrlWithQuery(['tag' => $item->id]) }}>{{ $item->name }}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -124,8 +130,9 @@
                             <form action="{{ route('sub') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                    <input type="email" name="email" class="form-control"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'"
+                                        placeholder='Enter email' required>
                                 </div>
                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1"
                                     type="submit">Subscribe</button>

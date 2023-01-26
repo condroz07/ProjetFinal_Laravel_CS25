@@ -60,18 +60,28 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
+        Gate::define('blog.validate', function($user, $blog){
+            if ($user->role_id === 1) {
+                return true;
+            } elseif ($user->role_id === 3 && ($blog->user_id === $user->id || $blog->user->role_id === 2)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         Gate::define('product', function(){
             if (Auth::user()->role_id === 1 || Auth::user()->role_id === 2) {
                 return true;
             }
         });
 
-        Gate::define('edit-user', function ($userToEdit) {
-            return Auth::user()->role_id === 1 && Auth::user()->id !== $userToEdit->id;
+        Gate::define('edit-user', function ($user,$users) {
+            return ($user->role_id === 1 && $users->role_id != 1) || ($user->role_id === 1 && $users->role_id == 1) && $user->id == $users->id ;
         });
         
-        Gate::define('delete-user', function ($userToDelete) {
-            return Auth::user()->role_id === 1 && Auth::user()->id !== $userToDelete->id;
+        Gate::define('delete-user', function ($user,$users) {
+            return ($user->role_id === 1 && $users->role_id != 1);
         });
     }
 }

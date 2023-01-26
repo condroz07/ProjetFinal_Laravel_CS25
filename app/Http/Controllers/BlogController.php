@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -71,7 +72,18 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $blog = new Blog();
+        $blog->name = $request->name;
+        $blog->src = $request->file('src')->hashName();
+        Storage::put('/public', $request->file('src'));
+        $blog->text = $request->text;
+        $blog->text2 = $request->text2;
+        $blog->text3 = $request->text3;
+        $blog->categriblogs_id = $request->categriblogs_id;
+        $blog->tags_id = $request->tags_id;
+        $blog->user_id = Auth::user()->id;
+        $blog->save();
+        return redirect()->back()->with('success','Blog create');
     }
 
     /**

@@ -35,7 +35,7 @@ class dashboardController extends Controller
         $products = Product::find($id);
         $bestseller = Product::all()->where('quantite', '<=', '5');
         $comment = Cproduct::all();
-        return view('pages.back.pages.products.editProducts', compact('products', 'bestseller','comment'));
+        return view('pages.back.pages.products.editProducts', compact('products', 'bestseller', 'comment'));
     }
     public function newProducts()
     {
@@ -44,36 +44,43 @@ class dashboardController extends Controller
         return view('pages.back.pages.products.newProducts', compact('color', 'categoris'));
     }
 
-    public function allCateg(){
+    public function allCateg()
+    {
         $categoris = Categoris::paginate(5);
         return view('pages.back.pages.products.categoris.allcategoris', compact('categoris'));
     }
 
-    public function newCateg(){
+    public function newCateg()
+    {
         return view('pages.back.pages.products.categoris.categoris');
     }
 
-    public function allColor(){
+    public function allColor()
+    {
         $color = Couleur::paginate(5);
         return view('pages.back.pages.products.color.allColor', compact('color'));
     }
 
-    public function newColor(){
+    public function newColor()
+    {
         return view('pages.back.pages.products.color.color');
     }
 
-    public function blog(){
+    public function blog()
+    {
         $blog = Blog::paginate(9);
         return view('pages.back.pages.blog.blog', compact('blog'));
     }
 
-    public function createBlog(){
+    public function createBlog()
+    {
         $categoris = categriblog::all();
         $tag = Tag::all();
-        return view('pages.back.pages.blog.create', compact('tag','categoris'));
+        return view('pages.back.pages.blog.create', compact('tag', 'categoris'));
     }
 
-    public function editBlog($id){
+    public function editBlog($id)
+    {
         $blog = Blog::find($id);
         $comment = Cblog::paginate(2);
         $recent = Blog::orderBy('id', 'desc')->take(4)->get();
@@ -82,50 +89,71 @@ class dashboardController extends Controller
         return view('pages.back.pages.blog.edit', compact('blog', 'comment', 'recent', 'comment2'));
     }
 
-    public function cblog(){
+    public function cblog()
+    {
         $categoris = categriblog::paginate(5);
         return view('pages.back.pages.blog.categoris.categoris', compact('categoris'));
     }
 
-    public function newCategBlog(){
+    public function newCategBlog()
+    {
         return view('pages.back.pages.blog.categoris.newCategBlog');
     }
 
-    public function tag(){
+    public function tag()
+    {
         $tag = Tag::paginate(5);
         return view('pages.back.pages.blog.tag.tag', compact('tag'));
     }
-    
-    public function newTagBlog(){
+
+    public function newTagBlog()
+    {
         return view('pages.back.pages.blog.tag.newTagBlog');
     }
 
-    public function user(){
+    public function user()
+    {
         $user = User::paginate(9);
         $role = Roles::all();
         return view('pages.back.pages.user.user', compact('user', 'role'));
     }
 
-    public function delUser($id){
+    public function delUser($id)
+    {
         $user = User::find($id);
         $user->delete();
         return redirect()->back()->with('success', 'utilisateur supprimer');
     }
 
-    public function editUser(Request $request, $id){
+    public function editUser(Request $request, $id)
+    {
         $user = User::find($id);
         $user->role_id = $request->role_id;
         $user->save();
         return redirect()->back()->with('success', 'Votre modification a été effectuer avec success');
     }
 
-    public function contact(){
+    public function contact()
+    {
         $item = Adresse::find(1);
         return view('pages.back.pages.contact.contact', compact('item'));
     }
 
-    public function favoris(){
+    public function favoris()
+    {
         $favoris = Favoris::paginate(9);
         return view('pages.back.pages.favoris.favoris', compact('favoris'));
+    }
+
+    public function validateBlog($id)
+    {
+        $blog = Blog::find($id);
+        if ($blog->isValidated === 0) {
+            $blog->isValidated = true;
+            $blog->save();
+            return redirect()->back()->with('success', 'Votre modification a été effectuer avec success');
+        }else{
+            return redirect()->back()->with('success', 'Votre blog est déjà valider');
+        }
     }
 }
