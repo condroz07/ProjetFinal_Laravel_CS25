@@ -22,9 +22,10 @@ class OrderController extends Controller
             return redirect()->back()->with('danger', 'Vous n\'avez pas encore fait de commande sur notre site');
         }else{
             $checkout = Checkout::all()->where('user_id', Auth::user()->id)->last();
-            $order = Order::all()->where('user_id', Auth::user()->id)->last();
+            $order = Order::all()->where('order', ' =' , $checkout->order);
             $adresse = Adresse::all()->last();
-            return view('pages.front.panier.order.order', compact('order', 'checkout', 'adresse'));
+            $order2 = Order::all()->where('order')->last();
+            return view('pages.front.panier.order.order', compact('order', 'checkout', 'adresse', 'order2'));
         }
     }
 
@@ -50,7 +51,6 @@ class OrderController extends Controller
         $cart = Panier::where('user_id', Auth::user()->id)->get();
 
         if ($order) {
-
             Order::create([
                 "firstname" => $request->firstname,
                 "lastname" => $request->lastname,
@@ -71,8 +71,9 @@ class OrderController extends Controller
                     'order' => $request->order,
                     'order_id' => Order::latest()->first()->id
                 ]);
+                $item->products->quantite -= $item->quantite;
+                $item->products->save();
             }
-
 
             Panier::where('user_id', Auth::user()->id)->delete();
 

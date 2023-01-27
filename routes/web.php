@@ -17,6 +17,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SoldesController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -122,10 +123,6 @@ Route::post('/newCateg', [CategorisController::class, 'newCateg'])->middleware('
 Route::delete('/deleteCateg/{id}', [CategorisController::class, 'destroy'])->middleware('isGuest', 'isAdmin');
 
 
-// Route::middleware(['auth', 'isProduct'])->group(function () {
-
-// });
-
 Route::get('/allProducts', [dashboardController::class, 'products'])->middleware('isGuest', 'isWebmaster');
 Route::delete('/deleteProduct/{id}', [ProductController::class, 'destroy'])->middleware('isGuest', 'isAdmin');
 Route::get('/newProducts', [dashboardController::class, "newProducts"])->middleware('isGuest', 'isWebmaster');
@@ -168,6 +165,12 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     Route::delete('/user/delete/{id}', [dashboardController::class, 'delUser'])->name('users.delete');
 });
 
+// Order
+
+Route::get('/allOrder', [dashboardController::class, 'order'])->middleware('isGuest', 'isAdmin');
+Route::post('/allOrder/{id}', [dashboardController::class, 'validateOrder'])->middleware('isGuest', 'isAdmin');
+Route::delete('/deleteOrder/{id}', [dashboardController::class, 'deleteOrder'])->middleware('isGuest', 'isAdmin');
+
 // contact
 Route::get('/backContact/1', [dashboardController::class, 'contact'])->middleware('isGuest', 'isAdmin');
 Route::post('/editContact/{id}', [ContactController::class, 'update'])->middleware('isGuest', 'isAdmin');
@@ -183,6 +186,8 @@ Route::delete('/mailBox/delete/{id}', [ContactController::class, 'destroy'])->mi
 Route::post('/mailBox/archiver/{id}', [ContactController::class, 'archiveMail'])->middleware('isGuest', 'isAdmin');
 Route::get('/mailBox/{id}', [ContactController::class, 'showMail'])->name('show-mail')->middleware('isGuest', 'isAdmin');
 Route::post('/mailBox/lu/{id}', [ContactController::class, 'vuMail'])->middleware('isGuest', 'isAdmin');
+Route::get('/response/{id}', [ResponseController::class, 'index'])->middleware('isGuest', 'isAdmin');
+Route::post('/sendResponse', [ResponseController::class, 'sendMail'])->middleware('isGuest', 'isAdmin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

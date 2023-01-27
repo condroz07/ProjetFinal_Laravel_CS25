@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('number');
             $table->string('city');
             $table->integer('order');
+            $table->boolean('isValidated')->default(false);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

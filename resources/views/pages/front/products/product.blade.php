@@ -87,30 +87,37 @@
                     <div class="row align-items-center latest_product_inner">
 
                         @foreach ($products as $item)
-                            <div  class="col-lg-4 col-sm-6" >
-                                <div class="single_product_item">
-                                    <img src="{{ asset('storage/' . $item->src) }}" alt="" style="height: 35svh">
-                                    <div class="single_product_text">
-                                        <form action="{{ route('panier.ajouter') }}" method="POST">
-                                            @csrf
-                                            <input type="text" class="d-none" name="products_id" value="{{ $item->id }}">
-                                            <h4>{{ $item->name }}</h4>
-                                            <h3>{{ $item->prix }}€</h3>
-                                            @auth
-                                                <a href="" class="add_cart"><button type="submit" class="btn">+ add to cart</button></a>
-                                            @endauth
-                                        </form>
-                                        @auth
-                                            <form action="{{ route('add.favoris') }}" method="POST">
+                            @if ($item->quantite > 0)
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="single_product_item">
+                                        <img src="{{ asset('storage/' . $item->src) }}" alt=""
+                                            style="height: 35svh">
+                                        <div class="single_product_text">
+                                            <form action="{{ route('panier.ajouter') }}" method="POST">
                                                 @csrf
-                                                <input type="text" class="d-none" name="products_id" value="{{ $item->id }}">
-                                                <a><button class="btn" type="submit"><i class="ti-heart"></i></button></a>
+                                                <input type="text" class="d-none" name="products_id"
+                                                    value="{{ $item->id }}">
+                                                <h4>{{ $item->name }}</h4>
+                                                <h3>{{ $item->prix }}€</h3>
+                                                @auth
+                                                    <a href="" class="add_cart"><button type="submit" class="btn">+
+                                                            add to cart</button></a>
+                                                @endauth
                                             </form>
-                                        @endauth
-                                        <a href="/showProduct/{{ $item->id }}">More Détails</a>
+                                            @auth
+                                                <form action="{{ route('add.favoris') }}" method="POST">
+                                                    @csrf
+                                                    <input type="text" class="d-none" name="products_id"
+                                                        value="{{ $item->id }}">
+                                                    <a><button class="btn" type="submit"><i
+                                                                class="ti-heart"></i></button></a>
+                                                </form>
+                                            @endauth
+                                            <a href="/showProduct/{{ $item->id }}">More Détails</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endforeach
 
                         <div class="col-lg-12">

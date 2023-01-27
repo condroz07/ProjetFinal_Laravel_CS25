@@ -16,7 +16,7 @@
             </p>
         </div>
         <div>
-            <a class="btn_3 text-white" href="">Répondre</a>
+            <a class="btn_3 text-white" href="/response/{{ $mail->id }}">Répondre</a>
         </div>
     </section>
 @endsection

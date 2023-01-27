@@ -54,7 +54,7 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body d-flex flex-column align-items-center">
                     <h5 class="card-title">Order</h5>
-                    <a href="#" class="btn_3">Look Order</a>
+                    <a href="/allOrder" class="btn_3">Look Order</a>
                 </div>
             </div>
         @endcan

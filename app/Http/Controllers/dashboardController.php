@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Role;
+use App\Mail\OrderMail;
 use App\Models\Adresse;
 use App\Models\Blog;
 use App\Models\Categoris;
 use App\Models\categriblog;
 use App\Models\Cblog;
+use App\Models\Checkout;
 use App\Models\Contact;
 use App\Models\Couleur;
 use App\Models\Cproduct;
 use App\Models\Favoris;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Roles;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class dashboardController extends Controller
 {
@@ -152,8 +156,33 @@ class dashboardController extends Controller
             $blog->isValidated = true;
             $blog->save();
             return redirect()->back()->with('success', 'Votre modification a été effectuer avec success');
-        }else{
-            return redirect()->back()->with('success', 'Votre blog est déjà valider');
+        } else {
+            return redirect()->back()->with('danger', 'Votre blog est déjà valider');
         }
+    }
+
+    public function order()
+    {
+        $order = Order::paginate(9);
+        $order2 = Order::paginate(9);
+        return view('pages.back.pages.order.order', compact('order', 'order2'));
+    }
+    public function validateOrder($id)
+    {
+        $order = Order::find($id);
+        if ($order->isValidated === 0) {
+            $order->isValidated = true;
+            $order->save();
+            Mail::to($order->email)->send(new OrderMail);
+            return redirect()->back()->with('success', 'Order Validate');
+        }else{
+            return redirect()->back()->with('danger', 'Votre order est déjà valider');
+        }
+    }
+
+    public function deleteOrder($id){
+        $order = Checkout::find($id);
+        $order->delete();
+        return redirect()->back()->with('success', 'Order Supprimer');
     }
 }

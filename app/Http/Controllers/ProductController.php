@@ -29,9 +29,9 @@ class ProductController extends Controller
         if ($color) {
             $query->where('couleur_id', $color);
         }
-        if(request('search')){
+        if (request('search')) {
             $search = Product::where('name', 'like', '%' . request('search') . '%')->get();
-        }else {
+        } else {
             $search = Product::all();
         }
         $products = $query->paginate(9);
@@ -39,21 +39,21 @@ class ProductController extends Controller
         $categoris = Categoris::all();
         $color = Couleur::all();
         $bestseller = Product::all()->where('quantite', '<=', '5');
-        return view('pages.front.products.product', compact( 'categoris', 'color', 'bestseller', 'products', 'request'));
+        return view('pages.front.products.product', compact('categoris', 'color', 'bestseller', 'products', 'request'));
     }
 
     public function search(Request $request)
     {
-        if($request->search){
+        if ($request->search) {
             $products = Product::where('name', 'LIKE', "%$request->search%")->get();
-        }else {
+        } else {
             $products = Product::all();
         }
 
         $categoris = Categoris::all();
         $color = Couleur::all();
         $bestseller = Product::all()->where('quantite', '<=', '5');
-        return view('pages.front.products.product', compact('categoris', 'color', 'bestseller','products', 'request'));
+        return view('pages.front.products.product', compact('categoris', 'color', 'bestseller', 'products', 'request'));
     }
     public function newProduct(Request $request)
     {
@@ -99,9 +99,13 @@ class ProductController extends Controller
     public function show(Product $product, $id)
     {
         $products = Product::find($id);
-        $bestseller = Product::all()->where('quantite', '<=', '5');
-        $comment = Cproduct::all();
-        return view('pages.front.products.showProduct', compact('products', 'bestseller', 'comment'));
+        if ($products->quantite === 0) {
+            return redirect()->back()->with('danger', 'Se produit est hors stock');
+        } else {
+            $bestseller = Product::all()->where('quantite', '<=', '5');
+            $comment = Cproduct::all();
+            return view('pages.front.products.showProduct', compact('products', 'bestseller', 'comment'));
+        }
     }
 
     /**
@@ -112,7 +116,6 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        
     }
 
     /**
@@ -127,7 +130,7 @@ class ProductController extends Controller
         $update = Product::find($id);
         $update->quantite = $request->quantite;
         $update->save();
-        return redirect()->back()->with('success','Vos modification on été enregistrer avec success');
+        return redirect()->back()->with('success', 'Vos modification on été enregistrer avec success');
     }
 
     /**

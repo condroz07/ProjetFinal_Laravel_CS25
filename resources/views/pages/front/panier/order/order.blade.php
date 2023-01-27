@@ -32,10 +32,10 @@
                         <h4>order info</h4>
                         <ul>
                             <li>
-                                <p>order number</p><span>: {{ $checkout->order }}</span>
+                                <p>order number</p><span>: {{ $order2->order }}</span>
                             </li>
                             <li>
-                                <p>data</p><span>: {{ $checkout->created_at->toFormattedDateString('j F Y') }}</span>
+                                <p>data</p><span>: {{ $order2->created_at->toFormattedDateString('j F Y') }}</span>
                             </li>
                             <li>
                                 <p>total</p><span>: {{ $checkout->products->prix * $checkout->quantite }}€</span>
@@ -64,13 +64,13 @@
                         <h4>shipping Address</h4>
                         <ul>
                             <li>
-                                <p>Street</p><span>: {{ $order->adresse }}</span>
+                                <p>Street</p><span>: {{ $order2->adresse }}</span>
                             </li>
                             <li>
-                                <p>country</p><span>: {{ $order->city }}</span>
+                                <p>country</p><span>: {{ $order2->city }}</span>
                             </li>
                             <li>
-                                <p>postcode</p><span>: {{ $order->postale }}</span>
+                                <p>postcode</p><span>: {{ $order2->postale }}</span>
                             </li>
                         </ul>
                     </div>
@@ -89,11 +89,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th colspan="2"><span>{{ $checkout->products->name }}</span></th>
-                                    <th>{{ $checkout->quantite }}</th>
-                                    <th> <span>{{ $checkout->products->prix * $checkout->quantite }}€</span></th>
-                                </tr>
+                                @foreach ($checkout as $item)
+                                    <tr>
+                                        {{-- <th colspan="2"><span>{{ $item->products->name }}</span></th> --}}
+                                        {{-- <th>{{ $item->quantite }}</th> --}}
+                                        {{-- <th> <span>{{ $item->products->prix * $item->quantite }}€</span></th> --}}
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>

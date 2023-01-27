@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
-class Contact extends Model
+class Response extends Model
 {
     use HasFactory;
-    public function response() {
-        return $this->hasMany(Response::class);
+    public function mail(){
+        return $this->belongsTo(Contact::class);
     }
 }
