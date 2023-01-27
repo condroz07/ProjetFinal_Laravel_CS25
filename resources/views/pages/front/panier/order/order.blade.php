@@ -38,7 +38,7 @@
                                 <p>data</p><span>: {{ $order2->created_at->toFormattedDateString('j F Y') }}</span>
                             </li>
                             <li>
-                                <p>total</p><span>: {{ $checkout->products->prix * $checkout->quantite }}€</span>
+                                <p>total</p><span>: {{ $total }} €</span>
                             </li>
                         </ul>
                     </div>
@@ -91,16 +91,16 @@
                             <tbody>
                                 @foreach ($checkout as $item)
                                     <tr>
-                                        {{-- <th colspan="2"><span>{{ $item->products->name }}</span></th> --}}
-                                        {{-- <th>{{ $item->quantite }}</th> --}}
-                                        {{-- <th> <span>{{ $item->products->prix * $item->quantite }}€</span></th> --}}
+                                        <th colspan="2"><span>{{ $item->products->name }}</span></th>
+                                        <th>{{ $item->quantite }}</th>
+                                        <th> <span>{{ $item->products->prix * $item->quantite }}€</span></th>
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th scope="col" colspan="3">Quantity</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Total: {{ $total }} €</th>
                                 </tr>
                             </tfoot>
                         </table>

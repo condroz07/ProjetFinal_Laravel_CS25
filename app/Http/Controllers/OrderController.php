@@ -21,11 +21,14 @@ class OrderController extends Controller
         if(Auth::user()->checkout->isEmpty()){
             return redirect()->back()->with('danger', 'Vous n\'avez pas encore fait de commande sur notre site');
         }else{
-            $checkout = Checkout::all()->where('user_id', Auth::user()->id)->last();
-            $order = Order::all()->where('order', ' =' , $checkout->order);
+            $order = Order::all()->where('user_id', Auth::user()->id)->last();
+            $checkout = Checkout::all()->where('order_id',  $order->id);
             $adresse = Adresse::all()->last();
-            $order2 = Order::all()->where('order')->last();
-            return view('pages.front.panier.order.order', compact('order', 'checkout', 'adresse', 'order2'));
+            $order2 = Order::all()->where('user_id', Auth::user()->id)->last();
+            $total = $checkout->sum(function ($item) {
+                return $item->products->prix * $item->quantite;
+            });
+            return view('pages.front.panier.order.order', compact('order', 'checkout', 'adresse', 'order2', 'total'));
         }
     }
 
